@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import Splash from '../screens/Splash'
 import Login from '../screens/Login'
+import Home from '../screens/Home'
 
 const Stack = createStackNavigator()
 const forFade = ({ current }) => ({
@@ -25,6 +26,7 @@ export default function Navigator() {
         component={Login}
         options={{ cardStyleInterpolator: forFade }}
       />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   )
 }

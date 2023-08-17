@@ -12,7 +12,6 @@ const InputBox = (props) => {
       </Box>
       <InputInput
         placeholder={props.placeholder ? props.placeholder : ''}
-        fontFamily={'Courier'}
         placeholderTextColor="#A0A6A1"
         color="#3a3a3a"
         autoCapitalize="none"
@@ -21,6 +20,8 @@ const InputBox = (props) => {
         type={props.type ? props.type : 'text'}
         autoFocus={false}
         autoCorrect={false}
+        onChangeText={(value) => props.onChange(value)}
+        value={props.value}
       />
     </Input>
   )
@@ -30,7 +31,9 @@ InputBox.propTypes = {
   icon: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   keyboardType: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string
 }
 
 const styles = StyleSheet.create({

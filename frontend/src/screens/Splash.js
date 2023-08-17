@@ -1,3 +1,4 @@
+import { VStack } from '@gluestack-ui/react'
 import { View, Image, Text, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useEffect } from 'react'
@@ -12,9 +13,11 @@ const Splash = (props) => {
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>
       <View style={styles.container}>
-        <Image source={Logo} alt="HealHub Logo" style={styles.image} />
-        <Text style={styles.title}>HealHub</Text>
-        <Text style={styles.tagline}>Wellness Simplified</Text>
+        <VStack gap={5} alignItems="center">
+          <Image source={Logo} alt="HealHub Logo" style={styles.image} />
+          <Text style={styles.title}>HealHub</Text>
+          <Text style={styles.tagline}>Wellness Simplified</Text>
+        </VStack>
       </View>
     </LinearGradient>
   )

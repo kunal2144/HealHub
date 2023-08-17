@@ -1,38 +1,56 @@
+import React, { useEffect, useState } from 'react'
+import Logo from '../assets/Logo.png'
+import InputBox from '../components/InputBox'
 import { View, Image, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import Logo from '../assets/Logo.png'
 import { AntDesign } from '@expo/vector-icons'
-import React from 'react'
-import { VStack, HStack, Box, Text } from '@gluestack-ui/react'
-import InputBox from '../components/InputBox'
+import { VStack, HStack, Text, Button } from '@gluestack-ui/react'
 
-const Login = () => {
+const Login = (props) => {
+  const [Email, setEmail] = useState('')
+  const [Password, setPassword] = useState('')
+  const [loginPressed, setLoginPressed] = useState(false)
+  const [signupPressed, setSignupPressed] = useState(false)
+
+  useEffect(() => {
+    console.log(`Email: ${Email}\n Password: ${Password}`)
+  }, [Email, Password])
+
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>
       <View style={styles.container}>
         <Image source={Logo} alt="HealHub Logo" style={styles.image} />
-        <VStack gap={'20%'} marginTop={30} width={'100%'} alignItems="center">
+        <VStack gap={20} marginTop={30} width={'100%'} alignItems="center">
           <HStack width={'65%'}>
             <InputBox
               icon="mail"
               placeholder={'Email Address'}
               keyboardType={'email-address'}
+              value={Email}
+              onChange={setEmail}
             />
           </HStack>
           <HStack width={'65%'}>
             <InputBox
               icon="lock"
               placeholder={'Password'}
-              keyboardType={'password'}
               type={'password'}
+              value={Password}
+              onChange={setPassword}
             />
           </HStack>
-          <Box style={styles.login} width={'65%'}>
+          <Button
+            style={[styles.login, loginPressed && styles.loginPressed]}
+            width={'65%'}
+            onPress={() => props.navigation.navigate('Home')}
+            onPressIn={() => setLoginPressed(true)}
+            onPressOut={() => setLoginPressed(false)}
+          >
             <Text fontSize={16} color="white" fontFamily="Poppins_700Bold">
               Log in
             </Text>
             <AntDesign name="login" size={24} color="white" />
-          </Box>
+          </Button>
           <Text underline="true" fontFamily="Poppins_400Regular" color="black">
             Forgot Password?
           </Text>
@@ -43,12 +61,17 @@ const Login = () => {
             </Text>
             <Text color="black">____________</Text>
           </HStack>
-          <Box style={styles.signup} width={'65%'}>
+          <Button
+            style={[styles.signup, signupPressed && styles.signupPressed]}
+            width={'65%'}
+            onPressIn={() => setSignupPressed(true)}
+            onPressOut={() => setSignupPressed(false)}
+          >
             <Text fontSize={16} color="#005D79" fontFamily="Poppins_700Bold">
               Sign up
             </Text>
             <AntDesign name="login" size={24} color="#005D79" />
-          </Box>
+          </Button>
         </VStack>
       </View>
     </LinearGradient>
@@ -68,22 +91,30 @@ const styles = StyleSheet.create({
   login: {
     flexDirection: 'row',
     gap: 10,
+    height: 45,
     backgroundColor: '#158AAD',
     borderRadius: 10,
-    padding: 10,
+    padding: 9,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  loginPressed: {
+    backgroundColor: '#0F5F7B'
   },
   signup: {
     flexDirection: 'row',
     gap: 10,
+    height: 45,
     backgroundColor: 'transparent',
     borderRadius: 10,
     borderColor: '#005D79',
     borderWidth: 1,
-    padding: 10,
+    padding: 9,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  signupPressed: {
+    backgroundColor: 'rgba(52, 152, 219, 0.2)'
   }
 })
 

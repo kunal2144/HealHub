@@ -8,6 +8,8 @@ import {
   Poppins_700Bold,
   Poppins_400Regular
 } from '@expo-google-fonts/poppins'
+// import courier font
+import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 import AppLoading from 'expo-app-loading'
 import { LogBox } from 'react-native'
 
@@ -16,7 +18,8 @@ export default function App() {
 
   let [fontsLoaded] = useFonts({
     Poppins_700Bold,
-    Poppins_400Regular
+    Poppins_400Regular,
+    RobotoMono_400Regular
   })
 
   if (!fontsLoaded) {
