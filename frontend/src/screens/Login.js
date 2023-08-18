@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Logo from '../assets/Logo.png'
 import InputBox from '../components/InputBox'
 import { View, Image, StyleSheet } from 'react-native'
@@ -11,10 +11,6 @@ const Login = (props) => {
   const [Password, setPassword] = useState('')
   const [loginPressed, setLoginPressed] = useState(false)
   const [signupPressed, setSignupPressed] = useState(false)
-
-  useEffect(() => {
-    console.log(`Email: ${Email}\n Password: ${Password}`)
-  }, [Email, Password])
 
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>

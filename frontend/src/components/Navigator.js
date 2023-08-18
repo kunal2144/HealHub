@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Splash from '../screens/Splash'
 import Login from '../screens/Login'
 import Home from '../screens/Home'
 
@@ -18,9 +17,8 @@ export default function Navigator() {
         headerShown: false,
         gestureEnabled: false
       }}
-      initialRouteName="Splash"
+      initialRouteName="Login"
     >
-      <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen
         name="Login"
         component={Login}
