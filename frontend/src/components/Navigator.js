@@ -10,7 +10,7 @@ const forFade = ({ current }) => ({
   }
 })
 
-export default function Navigator() {
+export function LoginNavigator() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -24,7 +24,24 @@ export default function Navigator() {
         component={Login}
         options={{ cardStyleInterpolator: forFade }}
       />
-      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
+  )
+}
+
+export function HomeNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: false
+      }}
+      initialRouteName="Home"
+    >
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ cardStyleInterpolator: forFade }}
+      />
     </Stack.Navigator>
   )
 }

@@ -1,10 +1,12 @@
-import React from 'react'
-import { Box, Input, InputInput } from '@gluestack-ui/react'
-import { AntDesign } from '@expo/vector-icons'
+import React, { useState } from 'react'
+import { Box, Input, InputIcon, InputInput } from '@gluestack-ui/react'
+import { AntDesign, Entypo } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
 const InputBox = (props) => {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
     <Input style={styles.input}>
       <Box style={styles.icon}>
@@ -17,12 +19,32 @@ const InputBox = (props) => {
         autoCapitalize="none"
         spellCheck={false}
         keyboardType={props.keyboardType ? props.keyboardType : 'default'}
-        type={props.type ? props.type : 'text'}
+        type={
+          props.type == 'password'
+            ? showPassword
+              ? 'text'
+              : 'password'
+            : props.type
+            ? props.type
+            : 'text'
+        }
         autoFocus={false}
         autoCorrect={false}
         onChangeText={(value) => props.onChange(value)}
         value={props.value}
       />
+      {props.type == 'password' && (
+        <InputIcon
+          onPress={() => setShowPassword((value) => !value)}
+          marginRight={10}
+        >
+          <Entypo
+            name={showPassword ? 'eye' : 'eye-with-line'}
+            size={20}
+            color="#158AAD"
+          />
+        </InputIcon>
+      )}
     </Input>
   )
 }

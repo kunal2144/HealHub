@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AntDesign } from '@expo/vector-icons'
@@ -8,8 +8,10 @@ import Logo from '../assets/Logo.png'
 import InputBox from '../components/InputBox'
 import axios from 'axios'
 import CustomToast from '../components/CustomToast'
+import { AuthContext } from '../components/AuthContext'
+import * as SecureStore from 'expo-secure-store'
 
-const Login = (props) => {
+const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginPressed, setLoginPressed] = useState(false)
@@ -17,6 +19,7 @@ const Login = (props) => {
   const [currentToastType, setCurrentToastType] = useState(null)
   const [validInputs, setValidInputs] = useState(false)
   const toast = useToast()
+  const { setUserToken } = useContext(AuthContext)
 
   const emailRegex =
     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
@@ -53,8 +56,14 @@ const Login = (props) => {
         config
       )
 
+      try {
+        await SecureStore.setItemAsync('JWT_TOKEN', data.token)
+        setUserToken(data.token)
+      } catch (error) {
+        console.log(error)
+      }
+
       toast.closeAll()
-      props.navigation.navigate('Home')
     } catch (error) {
       if (error.response.status === 401) {
         showToast(
@@ -123,7 +132,8 @@ const Login = (props) => {
         config
       )
 
-      props.navigation.navigate('Home')
+      await SecureStore.setItemAsync('JWT_TOKEN', data.token)
+      setUserToken(data.token)
     } catch (error) {
       if (error.response.status == 400) {
         showToast({

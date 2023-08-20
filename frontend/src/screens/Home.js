@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Button, ButtonText } from '@gluestack-ui/react'
+import { AuthContext } from '../components/AuthContext'
+import * as SecureStore from 'expo-secure-store'
 
-const Home = (props) => {
+const Home = () => {
+  const { setUserToken } = useContext(AuthContext)
+
+  const logout = async () => {
+    await SecureStore.deleteItemAsync('JWT_TOKEN')
+    setUserToken(null)
+  }
+
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>
       <View style={styles.container}>
-        <Button onPress={() => props.navigation.navigate('Login')}>
-          <ButtonText>Back</ButtonText>
+        <Button onPress={logout}>
+          <ButtonText>Log Out</ButtonText>
         </Button>
       </View>
     </LinearGradient>

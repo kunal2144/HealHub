@@ -5,17 +5,51 @@ import { GluestackUIProvider, config } from '@gluestack-ui/react'
 import { Poppins_700Bold, Poppins_400Regular } from '@expo-google-fonts/poppins'
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 import { LogBox } from 'react-native'
-import Navigator from './src/components/Navigator'
+import { LoginNavigator, HomeNavigator } from './src/components/Navigator'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
+import * as SecureStore from 'expo-secure-store'
+import { AuthContext } from './src/components/AuthContext'
+import axios from 'axios'
+import { BASE_URL } from '@env'
 
 export default function App() {
   LogBox.ignoreAllLogs()
 
   const [fontsLoaded, setFontsLoaded] = useState(false)
+  const [userToken, setUserToken] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(null)
 
   useEffect(() => {
-    async function loadFonts() {
+    const _retriveData = async () => {
+      try {
+        let token = await SecureStore.getItemAsync('JWT_TOKEN')
+        setUserToken(token)
+        if (token) {
+          const {
+            data: { valid }
+          } = await axios.post(`${BASE_URL}api/verify-token`, {
+            token
+          })
+
+          if (valid) {
+            setLoggedIn(true)
+          } else {
+            setLoggedIn(false)
+          }
+        } else {
+          setLoggedIn(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    _retriveData()
+  }, [userToken])
+
+  useEffect(() => {
+    const loadFonts = async () => {
       await SplashScreen.preventAutoHideAsync()
       await Font.loadAsync({
         Poppins_700Bold,
@@ -23,21 +57,26 @@ export default function App() {
         RobotoMono_400Regular
       })
       setFontsLoaded(true)
-      SplashScreen.hideAsync()
     }
 
     loadFonts()
   }, [])
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loggedIn === null) {
     return null
+  } else {
+    setTimeout(async () => {
+      await SplashScreen.hideAsync()
+    }, 1000)
   }
 
   return (
-    <GluestackUIProvider config={config.theme}>
-      <NavigationContainer>
-        <Navigator />
-      </NavigationContainer>
-    </GluestackUIProvider>
+    <AuthContext.Provider value={{ userToken, setUserToken }}>
+      <GluestackUIProvider config={config.theme}>
+        <NavigationContainer>
+          {loggedIn && userToken ? <HomeNavigator /> : <LoginNavigator />}
+        </NavigationContainer>
+      </GluestackUIProvider>
+    </AuthContext.Provider>
   )
 }
