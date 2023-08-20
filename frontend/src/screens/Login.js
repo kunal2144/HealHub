@@ -1,16 +1,173 @@
-import React, { useState } from 'react'
-import Logo from '../assets/Logo.png'
-import InputBox from '../components/InputBox'
+import React, { useEffect, useState } from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AntDesign } from '@expo/vector-icons'
-import { VStack, HStack, Text, Button } from '@gluestack-ui/react'
+import { VStack, HStack, Text, Button, useToast } from '@gluestack-ui/react'
+import { BASE_URL } from '@env'
+import Logo from '../assets/Logo.png'
+import InputBox from '../components/InputBox'
+import axios from 'axios'
+import CustomToast from '../components/CustomToast'
 
 const Login = (props) => {
-  const [Email, setEmail] = useState('')
-  const [Password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loginPressed, setLoginPressed] = useState(false)
   const [signupPressed, setSignupPressed] = useState(false)
+  const [currentToastType, setCurrentToastType] = useState(null)
+  const [validInputs, setValidInputs] = useState(false)
+  const toast = useToast()
+
+  const emailRegex =
+    /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
+
+  useEffect(() => {
+    if (password && emailRegex.test(email)) setValidInputs(true)
+    else setValidInputs(false)
+  }, [email, password])
+
+  const showToast = (toastConfig, type) => {
+    if (currentToastType !== type) {
+      toast.closeAll()
+      setTimeout(() => {
+        toast.show(toastConfig)
+        setCurrentToastType(type)
+      }, 100)
+    }
+  }
+
+  const login = async () => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      const { data } = await axios.post(
+        `${BASE_URL}api/patient/login/`,
+        {
+          email,
+          password
+        },
+        config
+      )
+
+      toast.closeAll()
+      props.navigation.navigate('Home')
+    } catch (error) {
+      if (error.response.status === 401) {
+        showToast(
+          {
+            placement: 'bottom',
+            duration: 5000,
+            onCloseComplete: () => setCurrentToastType(''),
+            render: ({ id }) => {
+              return (
+                <CustomToast
+                  id={id}
+                  backgroundColor="$error700"
+                  actionType="error"
+                  title="Login Failed"
+                  description="Invalid email or password"
+                  color="$textLight50"
+                  buttonColor="white"
+                  toast={toast}
+                />
+              )
+            }
+          },
+          'invalid'
+        )
+      } else {
+        showToast(
+          {
+            placement: 'bottom',
+            duration: 5000,
+            onCloseComplete: () => setCurrentToastType(''),
+            render: ({ id }) => {
+              return (
+                <CustomToast
+                  id={id}
+                  backgroundColor="$error700"
+                  actionType="error"
+                  title="Login Failed"
+                  description="Server error"
+                  color="$textLight50"
+                  buttonColor="white"
+                  toast={toast}
+                />
+              )
+            }
+          },
+          'server'
+        )
+      }
+    }
+  }
+
+  const signUp = async () => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      const { data } = await axios.post(
+        `${BASE_URL}api/patient/`,
+        {
+          email,
+          password
+        },
+        config
+      )
+
+      props.navigation.navigate('Home')
+    } catch (error) {
+      if (error.response.status == 400) {
+        showToast({
+          placement: 'bottom',
+          duration: 5000,
+          onCloseComplete: () => setCurrentToastType(''),
+          render: ({ id }) => {
+            return (
+              <CustomToast
+                id={id}
+                backgroundColor="$error700"
+                actionType="error"
+                title="Signup Failed"
+                description="Email already exists"
+                color="$textLight50"
+                buttonColor="white"
+                toast={toast}
+              />
+            )
+          }
+        })
+      } else {
+        showToast({
+          placement: 'bottom',
+          duration: 5000,
+          onCloseComplete: () => setCurrentToastType(''),
+          render: ({ id }) => {
+            return (
+              <CustomToast
+                id={id}
+                backgroundColor="$error700"
+                actionType="error"
+                title="Signup Failed"
+                description="Something went wrong"
+                color="$textLight50"
+                buttonColor="white"
+                toast={toast}
+              />
+            )
+          }
+        })
+      }
+    }
+  }
 
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>
@@ -22,7 +179,7 @@ const Login = (props) => {
               icon="mail"
               placeholder={'Email Address'}
               keyboardType={'email-address'}
-              value={Email}
+              value={email}
               onChange={setEmail}
             />
           </HStack>
@@ -31,16 +188,17 @@ const Login = (props) => {
               icon="lock"
               placeholder={'Password'}
               type={'password'}
-              value={Password}
+              value={password}
               onChange={setPassword}
             />
           </HStack>
           <Button
             style={[styles.login, loginPressed && styles.loginPressed]}
             width={'65%'}
-            onPress={() => props.navigation.navigate('Home')}
+            onPress={login}
             onPressIn={() => setLoginPressed(true)}
             onPressOut={() => setLoginPressed(false)}
+            isDisabled={!validInputs}
           >
             <Text fontSize={16} color="white" fontFamily="Poppins_700Bold">
               Log in
@@ -62,6 +220,8 @@ const Login = (props) => {
             width={'65%'}
             onPressIn={() => setSignupPressed(true)}
             onPressOut={() => setSignupPressed(false)}
+            onPress={signUp}
+            isDisabled={!validInputs}
           >
             <Text fontSize={16} color="#005D79" fontFamily="Poppins_700Bold">
               Sign up

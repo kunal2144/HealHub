@@ -156,3 +156,5 @@ docs/pages/versions/*/react-native/*.diff
 
 .env
 %ProgramData%
+
+eas.json
