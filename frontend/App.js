@@ -28,7 +28,7 @@ export default function App() {
         if (token) {
           const {
             data: { valid }
-          } = await axios.post(`${BASE_URL}api/verify-token`, {
+          } = await axios.post(`${BASE_URL}api/user/verify-token`, {
             token
           })
 
