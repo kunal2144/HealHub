@@ -12,6 +12,7 @@ import * as SecureStore from 'expo-secure-store'
 import { AuthContext } from './src/components/AuthContext'
 import axios from 'axios'
 import { BASE_URL } from '@env'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export default function App() {
   LogBox.ignoreAllLogs()
@@ -71,12 +72,14 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ userToken, setUserToken }}>
-      <GluestackUIProvider config={config.theme}>
-        <NavigationContainer>
-          {loggedIn && userToken ? <HomeNavigator /> : <LoginNavigator />}
-        </NavigationContainer>
-      </GluestackUIProvider>
-    </AuthContext.Provider>
+    <SafeAreaProvider>
+      <AuthContext.Provider value={{ userToken, setUserToken }}>
+        <GluestackUIProvider config={config.theme}>
+          <NavigationContainer>
+            {loggedIn && userToken ? <HomeNavigator /> : <LoginNavigator />}
+          </NavigationContainer>
+        </GluestackUIProvider>
+      </AuthContext.Provider>
+    </SafeAreaProvider>
   )
 }
