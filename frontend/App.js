@@ -2,7 +2,11 @@ import 'react-native-gesture-handler'
 import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { GluestackUIProvider, config } from '@gluestack-ui/react'
-import { Poppins_700Bold, Poppins_400Regular } from '@expo-google-fonts/poppins'
+import {
+  Poppins_700Bold,
+  Poppins_400Regular,
+  Poppins_600SemiBold
+} from '@expo-google-fonts/poppins'
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 import { LogBox } from 'react-native'
 import { LoginNavigator, HomeNavigator } from './src/components/Navigator'
@@ -55,6 +59,7 @@ export default function App() {
       await Font.loadAsync({
         Poppins_700Bold,
         Poppins_400Regular,
+        Poppins_600SemiBold,
         RobotoMono_400Regular
       })
       setFontsLoaded(true)

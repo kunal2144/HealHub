@@ -3,11 +3,11 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
-
 import {
   Avatar,
   AvatarFallbackText,
   Box,
+  Button,
   HStack,
   Text,
   VStack
@@ -27,10 +27,10 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View height={'100%'} width={'90%'}>
+      <View height={'100%'} width={'95%'}>
         <View height={'95%'}>
           <ScrollView>
-            <VStack gap={20}>
+            <VStack gap={10}>
               <Box
                 height={80}
                 width={'100%'}
@@ -43,10 +43,14 @@ const Home = () => {
                   justifyContent="center"
                   alignItems="center"
                   height={'100%'}
-                  gap={20}
+                  gap={30}
                 >
                   <Box>
-                    <Text fontFamily="Poppins_700Bold" fontSize={20}>
+                    <Text
+                      fontFamily="Poppins_700Bold"
+                      color={'black'}
+                      fontSize={20}
+                    >
                       Good morning John,
                     </Text>
                     <Text fontFamily="Poppins_400Regular">
@@ -58,14 +62,50 @@ const Home = () => {
                   </Avatar>
                 </HStack>
               </Box>
-              <HStack gap={20} justifyContent="space-between">
+              <HStack gap={10} justifyContent="space-between">
                 <Box
+                  width={'40%'}
                   height={250}
                   borderRadius={20}
                   backgroundColor="#158AAD"
                   flexGrow={1}
-                ></Box>
+                  padding={18}
+                  gap={10}
+                >
+                  <VStack alignItems="center" height={'100%'}>
+                    <Text
+                      color="#ffffff"
+                      fontFamily="Poppins_600SemiBold"
+                      fontSize={22}
+                      lineHeight={24}
+                    >
+                      Blood Group
+                    </Text>
+                    <Text
+                      fontFamily="Poppins_700Bold"
+                      lineHeight={150}
+                      fontSize={70}
+                      color="#ffffff"
+                    >
+                      AB+
+                    </Text>
+                    <Button
+                      borderRadius={15}
+                      backgroundColor="#D0F4FF"
+                      width={'100%'}
+                      paddingHorizontal={5}
+                      height={35}
+                      position="absolute"
+                      bottom={0}
+                    >
+                      <Text fontSize={16} fontFamily="Poppins_600SemiBold">
+                        Update
+                      </Text>
+                    </Button>
+                  </VStack>
+                </Box>
                 <Box
+                  width={'40%'}
                   height={250}
                   borderRadius={20}
                   backgroundColor="#158AAD"
@@ -73,7 +113,7 @@ const Home = () => {
                 ></Box>
               </HStack>
               <Box
-                height={300}
+                height={250}
                 borderRadius={20}
                 backgroundColor="#158AAD"
               ></Box>
@@ -89,7 +129,7 @@ const Home = () => {
           activeOpacity={1}
           style={styles.touchableOpacityStyle}
         >
-          <HStack gap={50}>
+          <HStack gap={60}>
             <AntDesign name="home" size={24} color="black" />
             <FontAwesome5 name="capsules" size={24} color="black" />
             <AntDesign name="calendar" size={24} color="black" />

@@ -23,5 +23,8 @@
     "ignore": [
       "frontend"
     ]
+  },
+  "devDependencies": {
+    "react-native-svg-transformer": "^1.1.0"
   }
 }
