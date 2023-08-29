@@ -11,7 +11,7 @@ import CustomToast from '../components/CustomToast'
 import { AuthContext } from '../components/AuthContext'
 import * as SecureStore from 'expo-secure-store'
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginPressed, setLoginPressed] = useState(false)
@@ -116,67 +116,69 @@ const Login = () => {
   }
 
   const signUp = async () => {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+    // try {
+    //   const config = {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   }
 
-      const { data } = await axios.post(
-        `${BASE_URL}api/patient/`,
-        {
-          email,
-          password
-        },
-        config
-      )
+    //   const { data } = await axios.post(
+    //     `${BASE_URL}api/patient/`,
+    //     {
+    //       email,
+    //       password
+    //     },
+    //     config
+    //   )
 
-      await SecureStore.setItemAsync('JWT_TOKEN', data.token)
-      setUserToken(data.token)
-    } catch (error) {
-      if (error.response.status == 400) {
-        showToast({
-          placement: 'bottom',
-          duration: 5000,
-          onCloseComplete: () => setCurrentToastType(''),
-          render: ({ id }) => {
-            return (
-              <CustomToast
-                id={id}
-                backgroundColor="$error700"
-                actionType="error"
-                title="Signup Failed"
-                description="Email already exists"
-                color="$textLight50"
-                buttonColor="white"
-                toast={toast}
-              />
-            )
-          }
-        })
-      } else {
-        showToast({
-          placement: 'bottom',
-          duration: 5000,
-          onCloseComplete: () => setCurrentToastType(''),
-          render: ({ id }) => {
-            return (
-              <CustomToast
-                id={id}
-                backgroundColor="$error700"
-                actionType="error"
-                title="Signup Failed"
-                description="Something went wrong"
-                color="$textLight50"
-                buttonColor="white"
-                toast={toast}
-              />
-            )
-          }
-        })
-      }
-    }
+    //   await SecureStore.setItemAsync('JWT_TOKEN', data.token)
+    //   setUserToken(data.token)
+    // } catch (error) {
+    //   if (error.response.status == 400) {
+    //     showToast({
+    //       placement: 'bottom',
+    //       duration: 5000,
+    //       onCloseComplete: () => setCurrentToastType(''),
+    //       render: ({ id }) => {
+    //         return (
+    //           <CustomToast
+    //             id={id}
+    //             backgroundColor="$error700"
+    //             actionType="error"
+    //             title="Signup Failed"
+    //             description="Email already exists"
+    //             color="$textLight50"
+    //             buttonColor="white"
+    //             toast={toast}
+    //           />
+    //         )
+    //       }
+    //     })
+    //   } else {
+    //     showToast({
+    //       placement: 'bottom',
+    //       duration: 5000,
+    //       onCloseComplete: () => setCurrentToastType(''),
+    //       render: ({ id }) => {
+    //         return (
+    //           <CustomToast
+    //             id={id}
+    //             backgroundColor="$error700"
+    //             actionType="error"
+    //             title="Signup Failed"
+    //             description="Something went wrong"
+    //             color="$textLight50"
+    //             buttonColor="white"
+    //             toast={toast}
+    //           />
+    //         )
+    //       }
+    //     })
+    //   }
+    // }
+
+    props.navigation.navigate('SignUp')
   }
 
   return (

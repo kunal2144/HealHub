@@ -30,7 +30,7 @@ const Home = () => {
       <View height={'100%'} width={'95%'}>
         <View height={'95%'}>
           <ScrollView>
-            <VStack gap={10}>
+            <VStack gap={10} marginBottom={50}>
               <Box
                 height={80}
                 width={'100%'}
@@ -49,6 +49,7 @@ const Home = () => {
                     <Text
                       fontFamily="Poppins_700Bold"
                       color={'black'}
+                      lineHeight={26}
                       fontSize={20}
                     >
                       Good morning John,

@@ -9,7 +9,7 @@ import {
 } from '@expo-google-fonts/poppins'
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 import { LogBox } from 'react-native'
-import { LoginNavigator, HomeNavigator } from './src/components/Navigator'
+import { AuthStack, AppStack } from './src/components/Navigator'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
 import * as SecureStore from 'expo-secure-store'
@@ -81,7 +81,7 @@ export default function App() {
       <AuthContext.Provider value={{ userToken, setUserToken }}>
         <GluestackUIProvider config={config.theme}>
           <NavigationContainer>
-            {loggedIn && userToken ? <HomeNavigator /> : <LoginNavigator />}
+            {loggedIn && userToken ? <AppStack /> : <AuthStack />}
           </NavigationContainer>
         </GluestackUIProvider>
       </AuthContext.Provider>
