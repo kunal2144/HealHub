@@ -3,7 +3,7 @@ const generateToken = require('../config/generateToken')
 const Patient = require('../models/patient')
 
 const registerPatient = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
+  const { first_name, last_name, email, password } = req.body
 
   const patientExists = await Patient.findOne({ email })
 
@@ -13,6 +13,8 @@ const registerPatient = asyncHandler(async (req, res) => {
   }
 
   const patient = await Patient.create({
+    first_name,
+    last_name,
     email,
     password
   })
@@ -20,6 +22,8 @@ const registerPatient = asyncHandler(async (req, res) => {
   if (patient) {
     res.status(201).json({
       _id: patient._id,
+      firstName: patient.first_name,
+      lastName: patient.last_name,
       email: patient.email,
       token: generateToken(patient._id)
     })
@@ -37,6 +41,8 @@ const authPatient = asyncHandler(async (req, res) => {
   if (patient && (await patient.matchPassword(password))) {
     res.json({
       _id: patient._id,
+      firstName: patient.first_name,
+      lastName: patient.last_name,
       email: patient.email,
       token: generateToken(patient._id)
     })

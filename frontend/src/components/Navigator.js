@@ -18,7 +18,7 @@ export function AuthStack() {
         headerShown: false,
         gestureEnabled: false
       }}
-      initialRouteName="SignUp"
+      initialRouteName="Login"
     >
       <Stack.Screen
         name="Login"

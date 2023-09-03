@@ -19,7 +19,7 @@ const Login = (props) => {
   const [currentToastType, setCurrentToastType] = useState(null)
   const [validInputs, setValidInputs] = useState(false)
   const toast = useToast()
-  const { setUserToken } = useContext(AuthContext)
+  const { setUserToken, setUserData } = useContext(AuthContext)
 
   const emailRegex =
     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
@@ -58,7 +58,9 @@ const Login = (props) => {
 
       try {
         await SecureStore.setItemAsync('JWT_TOKEN', data.token)
+        await SecureStore.setItemAsync('USER_DATA', JSON.stringify(data))
         setUserToken(data.token)
+        setUserData(data)
       } catch (error) {
         console.log(error)
       }
@@ -115,72 +117,6 @@ const Login = (props) => {
     }
   }
 
-  const signUp = async () => {
-    // try {
-    //   const config = {
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   }
-
-    //   const { data } = await axios.post(
-    //     `${BASE_URL}api/patient/`,
-    //     {
-    //       email,
-    //       password
-    //     },
-    //     config
-    //   )
-
-    //   await SecureStore.setItemAsync('JWT_TOKEN', data.token)
-    //   setUserToken(data.token)
-    // } catch (error) {
-    //   if (error.response.status == 400) {
-    //     showToast({
-    //       placement: 'bottom',
-    //       duration: 5000,
-    //       onCloseComplete: () => setCurrentToastType(''),
-    //       render: ({ id }) => {
-    //         return (
-    //           <CustomToast
-    //             id={id}
-    //             backgroundColor="$error700"
-    //             actionType="error"
-    //             title="Signup Failed"
-    //             description="Email already exists"
-    //             color="$textLight50"
-    //             buttonColor="white"
-    //             toast={toast}
-    //           />
-    //         )
-    //       }
-    //     })
-    //   } else {
-    //     showToast({
-    //       placement: 'bottom',
-    //       duration: 5000,
-    //       onCloseComplete: () => setCurrentToastType(''),
-    //       render: ({ id }) => {
-    //         return (
-    //           <CustomToast
-    //             id={id}
-    //             backgroundColor="$error700"
-    //             actionType="error"
-    //             title="Signup Failed"
-    //             description="Something went wrong"
-    //             color="$textLight50"
-    //             buttonColor="white"
-    //             toast={toast}
-    //           />
-    //         )
-    //       }
-    //     })
-    //   }
-    // }
-
-    props.navigation.navigate('SignUp')
-  }
-
   return (
     <LinearGradient colors={['#2B87A2', '#79E083']}>
       <View style={styles.container}>
@@ -232,8 +168,7 @@ const Login = (props) => {
             width={'65%'}
             onPressIn={() => setSignupPressed(true)}
             onPressOut={() => setSignupPressed(false)}
-            onPress={signUp}
-            isDisabled={!validInputs}
+            onPress={() => props.navigation.navigate('SignUp')}
           >
             <Text fontSize={16} color="#005D79" fontFamily="Poppins_700Bold">
               Sign up

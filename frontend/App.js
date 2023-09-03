@@ -23,13 +23,16 @@ export default function App() {
 
   const [fontsLoaded, setFontsLoaded] = useState(false)
   const [userToken, setUserToken] = useState(null)
+  const [userData, setUserData] = useState(null)
   const [loggedIn, setLoggedIn] = useState(null)
 
   useEffect(() => {
     const _retriveData = async () => {
       try {
         let token = await SecureStore.getItemAsync('JWT_TOKEN')
+        let data = JSON.parse(await SecureStore.getItemAsync('USER_DATA'))
         setUserToken(token)
+        setUserData(data)
         if (token) {
           const {
             data: { valid }
@@ -78,7 +81,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <AuthContext.Provider value={{ userToken, setUserToken }}>
+      <AuthContext.Provider
+        value={{ userToken, setUserToken, userData, setUserData }}
+      >
         <GluestackUIProvider config={config.theme}>
           <NavigationContainer>
             {loggedIn && userToken ? <AppStack /> : <AuthStack />}

@@ -18,7 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
 
 const Home = () => {
-  const { setUserToken } = useContext(AuthContext)
+  const { setUserToken, userData } = useContext(AuthContext)
 
   const logout = async () => {
     await SecureStore.deleteItemAsync('JWT_TOKEN')
@@ -52,14 +52,17 @@ const Home = () => {
                       lineHeight={26}
                       fontSize={20}
                     >
-                      Good morning John,
+                      Good morning{' '}
+                      {userData.firstName > 7 ? '' : userData.firstName},
                     </Text>
                     <Text fontFamily="Poppins_400Regular">
                       How are you doing today?
                     </Text>
                   </Box>
                   <Avatar>
-                    <AvatarFallbackText>John Doe</AvatarFallbackText>
+                    <AvatarFallbackText>
+                      {`${userData.firstName} ${userData.lastName}`}
+                    </AvatarFallbackText>
                   </Avatar>
                 </HStack>
               </Box>

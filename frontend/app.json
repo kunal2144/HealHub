@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "gl.js.app",
@@ -25,11 +23,7 @@
     },
     "android": {
       "package": "gl.js.app",
-      "permissions": [
-        "CAMERA",
-        "WRITE_EXTERNAL_STORAGE",
-        "CAMERA_ROLL"
-      ],
+      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE", "CAMERA_ROLL"],
       "versionCode": 36,
       "softwareKeyboardLayoutMode": "pan"
     },
