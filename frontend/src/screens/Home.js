@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   HStack,
+  Image,
   Text,
   VStack
 } from '@gluestack-ui/react'
@@ -114,13 +115,61 @@ const Home = () => {
                   borderRadius={20}
                   backgroundColor="#158AAD"
                   flexGrow={1}
-                ></Box>
+                  padding={18}
+                >
+                  <VStack alignItems="left" height={'100%'} gap={10}>
+                    <HStack justifyContent="space-between" flexDirection="row">
+                      <Text
+                        color="#ffffff"
+                        fontFamily="Poppins_600SemiBold"
+                        fontSize={22}
+                        lineHeight={24}
+                      >
+                        Malaria
+                      </Text>
+                      <FontAwesome5 name="virus" size={40} color="black" />
+                    </HStack>
+                    <Text
+                      fontFamily="Poppins_600SemiBold"
+                      fontSize={16}
+                      color="#ffffff"
+                    >
+                      Mosquito-borne, life-threatening blood infection causing
+                      recurring fever and chills...
+                    </Text>
+                    <HStack gap={5} position="absolute" bottom={0} right={0}>
+                      <Text
+                        fontFamily="Poppins_600SemiBold"
+                        fontSize={15}
+                        color="#ffffff"
+                      >
+                        View More
+                      </Text>
+                      <AntDesign name="arrowright" size={24} color="white" />
+                    </HStack>
+                  </VStack>
+                </Box>
               </HStack>
               <Box
                 height={250}
                 borderRadius={20}
                 backgroundColor="#158AAD"
-              ></Box>
+                padding={18}
+                gap={10}
+              >
+                <VStack>
+                  <HStack gap={10} alignItems="center">
+                    <Image source={require('../assets/Logo.png')} size="xl" />
+                    <VStack gap={10}>
+                      <Text fontFamily="Poppins_600SemiBold" color="black">
+                        Dr. Ajin Giny K.
+                      </Text>
+                      <Text> 10:00 AM </Text>
+                      <Text> General Consultation</Text>
+                    </VStack>
+                  </HStack>
+                </VStack>
+              </Box>
               <Box
                 height={300}
                 borderRadius={20}
