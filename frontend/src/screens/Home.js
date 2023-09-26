@@ -1,8 +1,4 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
-import { FontAwesome5 } from '@expo/vector-icons'
-import { Ionicons } from '@expo/vector-icons'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Avatar,
   AvatarFallbackText,
@@ -14,23 +10,44 @@ import {
   VStack
 } from '@gluestack-ui/react'
 import { AuthContext } from '../components/AuthContext'
-import * as SecureStore from 'expo-secure-store'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
+import DoctorImage from '../assets/stock-doctor.jpeg'
+import { StyleSheet, View } from 'react-native'
+import { BASE_URL } from '@env'
+import axios from 'axios'
 
-const Home = () => {
-  const { setUserToken, userData } = useContext(AuthContext)
+const Home = ({ navigation }) => {
+  const { userData } = useContext(AuthContext)
+  const [disease, setDisease] = useState(null)
 
-  const logout = async () => {
-    await SecureStore.deleteItemAsync('JWT_TOKEN')
-    setUserToken(null)
-  }
+  useEffect(() => {
+    async function getDisease() {
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        const { data } = await axios.get(`${BASE_URL}api/disease/today`, {
+          config
+        })
+        setDisease(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getDisease()
+  }, [])
+
+  if (!disease) return null
 
   return (
     <SafeAreaView style={styles.container}>
       <View height={'100%'} width={'95%'}>
         <View height={'95%'}>
-          <ScrollView>
+          <ScrollView style={{ marginBottom: 10 }}>
             <VStack gap={10} marginBottom={50}>
               <Box
                 height={80}
@@ -76,6 +93,8 @@ const Home = () => {
                   flexGrow={1}
                   padding={18}
                   gap={10}
+                  borderColor="black"
+                  borderWidth={1}
                 >
                   <VStack alignItems="center" height={'100%'}>
                     <Text
@@ -96,6 +115,8 @@ const Home = () => {
                     </Text>
                     <Button
                       borderRadius={15}
+                      borderColor="black"
+                      borderWidth={1}
                       backgroundColor="#D0F4FF"
                       width={'100%'}
                       paddingHorizontal={5}
@@ -103,8 +124,12 @@ const Home = () => {
                       position="absolute"
                       bottom={0}
                     >
-                      <Text fontSize={16} fontFamily="Poppins_600SemiBold">
-                        Update
+                      <Text
+                        fontSize={16}
+                        fontFamily="Poppins_600SemiBold"
+                        color="black"
+                      >
+                        More Info
                       </Text>
                     </Button>
                   </VStack>
@@ -116,85 +141,294 @@ const Home = () => {
                   backgroundColor="#158AAD"
                   flexGrow={1}
                   padding={18}
+                  borderColor="black"
+                  borderWidth={1}
                 >
-                  <VStack alignItems="left" height={'100%'} gap={10}>
-                    <HStack justifyContent="space-between" flexDirection="row">
-                      <Text
-                        color="#ffffff"
-                        fontFamily="Poppins_600SemiBold"
-                        fontSize={22}
-                        lineHeight={24}
-                      >
-                        Malaria
-                      </Text>
-                      <FontAwesome5 name="virus" size={40} color="black" />
-                    </HStack>
+                  <VStack
+                    alignItems="center"
+                    height={'100%'}
+                    justifyContent="space-between"
+                  >
+                    <Text
+                      color="#ffffff"
+                      fontFamily="Poppins_600SemiBold"
+                      fontSize={22}
+                      lineHeight={24}
+                      ellipsizeMode="tail"
+                      numberOfLines={1}
+                    >
+                      {disease['Name']}
+                    </Text>
                     <Text
                       fontFamily="Poppins_600SemiBold"
                       fontSize={16}
                       color="#ffffff"
+                      numberOfLines={5}
+                      height={100}
                     >
-                      Mosquito-borne, life-threatening blood infection causing
-                      recurring fever and chills...
+                      {disease['Description']}
                     </Text>
-                    <HStack gap={5} position="absolute" bottom={0} right={0}>
+                    <Button
+                      borderRadius={15}
+                      borderColor="black"
+                      borderWidth={1}
+                      backgroundColor="#D0F4FF"
+                      width={'100%'}
+                      paddingHorizontal={5}
+                      height={35}
+                      onPress={() =>
+                        navigation.navigate('Disease', {
+                          disease
+                        })
+                      }
+                    >
                       <Text
+                        fontSize={16}
                         fontFamily="Poppins_600SemiBold"
-                        fontSize={15}
-                        color="#ffffff"
+                        color="black"
                       >
-                        View More
+                        Read More
                       </Text>
-                      <AntDesign name="arrowright" size={24} color="white" />
-                    </HStack>
+                    </Button>
                   </VStack>
                 </Box>
               </HStack>
+              <Text
+                textAlign="center"
+                fontFamily="Poppins_700Bold"
+                color="black"
+                textShadowOffset={{ width: 0, height: 3 }}
+                textShadowRadius={3}
+                textShadowColor="rgba(0, 0, 0, 0.25)"
+              >
+                Upcoming Appointments
+              </Text>
               <Box
-                height={250}
                 borderRadius={20}
                 backgroundColor="#158AAD"
                 padding={18}
-                gap={10}
+                borderColor="black"
+                borderWidth={1}
               >
-                <VStack>
+                <VStack gap={10}>
                   <HStack gap={10} alignItems="center">
-                    <Image source={require('../assets/Logo.png')} size="xl" />
-                    <VStack gap={10}>
-                      <Text fontFamily="Poppins_600SemiBold" color="black">
+                    <Box borderRadius={100} borderWidth={2} borderColor="black">
+                      <Image
+                        source={DoctorImage}
+                        size="xl"
+                        borderColor="white"
+                        borderWidth={3}
+                        borderRadius={100}
+                      />
+                    </Box>
+                    <VStack gap={2}>
+                      <Text
+                        fontFamily="Poppins_600SemiBold"
+                        color="white"
+                        size="lg"
+                      >
                         Dr. Ajin Giny K.
                       </Text>
-                      <Text> 10:00 AM </Text>
-                      <Text> General Consultation</Text>
+                      <Text color="white" size="md">
+                        10:00 AM{'\n'}General Consultation
+                      </Text>
                     </VStack>
+                  </HStack>
+                  <Button
+                    borderRadius={15}
+                    borderColor="black"
+                    borderWidth={1}
+                    backgroundColor="#D0F4FF"
+                    width={'100%'}
+                    paddingHorizontal={5}
+                    height={35}
+                    bottom={0}
+                  >
+                    <Text
+                      fontSize={16}
+                      fontFamily="Poppins_600SemiBold"
+                      color="black"
+                    >
+                      More Info
+                    </Text>
+                  </Button>
+                  <HStack alignItems="center" justifyContent="space-between">
+                    <Button
+                      borderRadius={15}
+                      borderColor="black"
+                      borderWidth={1}
+                      backgroundColor="#D0F4FF"
+                      width={'30%'}
+                      paddingHorizontal={5}
+                      height={35}
+                      bottom={0}
+                    >
+                      <Text
+                        fontSize={16}
+                        fontFamily="Poppins_600SemiBold"
+                        color="black"
+                      >
+                        Message
+                      </Text>
+                    </Button>
+                    <Button
+                      borderRadius={15}
+                      borderColor="black"
+                      borderWidth={1}
+                      backgroundColor="#D0F4FF"
+                      width={'35%'}
+                      paddingHorizontal={5}
+                      height={35}
+                      bottom={0}
+                    >
+                      <Text
+                        fontSize={16}
+                        fontFamily="Poppins_600SemiBold"
+                        color="black"
+                      >
+                        Reschedule
+                      </Text>
+                    </Button>
+                    <Button
+                      borderRadius={15}
+                      borderColor="black"
+                      borderWidth={1}
+                      backgroundColor="#D0F4FF"
+                      width={'30%'}
+                      paddingHorizontal={5}
+                      height={35}
+                      bottom={0}
+                      onPress={() => navigation.navigate('Consultations')}
+                    >
+                      <Text
+                        fontSize={16}
+                        fontFamily="Poppins_600SemiBold"
+                        color="black"
+                      >
+                        View All
+                      </Text>
+                    </Button>
                   </HStack>
                 </VStack>
               </Box>
+              <Text
+                textAlign="center"
+                fontFamily="Poppins_700Bold"
+                color="black"
+                textShadowOffset={{ width: 0, height: 3 }}
+                textShadowRadius={3}
+                textShadowColor="rgba(0, 0, 0, 0.25)"
+              >
+                Previous Appointments
+              </Text>
               <Box
-                height={300}
                 borderRadius={20}
                 backgroundColor="#158AAD"
-              ></Box>
+                borderColor="black"
+                borderWidth={1}
+              >
+                <VStack gap={10} padding={20}>
+                  <Box
+                    borderRadius={20}
+                    backgroundColor="#D0F4FF"
+                    borderColor="black"
+                    borderWidth={1}
+                    padding={10}
+                  >
+                    <HStack justifyContent="space-between" alignItems="center">
+                      <Image
+                        source={DoctorImage}
+                        size="sm"
+                        borderColor="white"
+                        borderWidth={2}
+                        borderRadius={100}
+                      />
+                      <Box
+                        height={'100%'}
+                        width={1}
+                        backgroundColor="black"
+                      ></Box>
+                      <VStack>
+                        <Text fontFamily="Poppins_700Bold" color="black">
+                          Dr. Ajin Giny K.
+                        </Text>
+                        <Text color="black">Orthopaedic</Text>
+                        <Text color="black">12/06/2023</Text>
+                      </VStack>
+                      <Box
+                        height={'100%'}
+                        width={1}
+                        backgroundColor="black"
+                      ></Box>
+                      <Button
+                        backgroundColor="#D0F4FF"
+                        height={35}
+                        onPress={() => navigation.navigate('Consultations')}
+                      >
+                        <Text
+                          fontSize={16}
+                          fontFamily="Poppins_600SemiBold"
+                          color="black"
+                          marginRight={10}
+                        >
+                          View
+                        </Text>
+                      </Button>
+                    </HStack>
+                  </Box>
+                  <Box
+                    borderRadius={20}
+                    backgroundColor="#D0F4FF"
+                    borderColor="black"
+                    borderWidth={1}
+                    padding={10}
+                  >
+                    <HStack justifyContent="space-between" alignItems="center">
+                      <Image
+                        source={DoctorImage}
+                        size="sm"
+                        borderColor="white"
+                        borderWidth={2}
+                        borderRadius={100}
+                      />
+                      <Box
+                        height={'100%'}
+                        width={1}
+                        backgroundColor="black"
+                      ></Box>
+                      <VStack>
+                        <Text fontFamily="Poppins_700Bold" color="black">
+                          Dr. Ajin Giny K.
+                        </Text>
+                        <Text color="black">Orthopaedic</Text>
+                        <Text color="black">12/06/2023</Text>
+                      </VStack>
+                      <Box
+                        height={'100%'}
+                        width={1}
+                        backgroundColor="black"
+                      ></Box>
+                      <Button
+                        backgroundColor="#D0F4FF"
+                        height={35}
+                        onPress={() => navigation.navigate('Consultations')}
+                      >
+                        <Text
+                          fontSize={16}
+                          fontFamily="Poppins_600SemiBold"
+                          color="black"
+                          marginRight={10}
+                        >
+                          View
+                        </Text>
+                      </Button>
+                    </HStack>
+                  </Box>
+                </VStack>
+              </Box>
             </VStack>
           </ScrollView>
         </View>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.touchableOpacityStyle}
-        >
-          <HStack gap={60}>
-            <AntDesign name="home" size={24} color="black" />
-            <FontAwesome5 name="capsules" size={24} color="black" />
-            <AntDesign name="calendar" size={24} color="black" />
-            <Ionicons
-              name="person-outline"
-              size={24}
-              color="black"
-              onPress={logout}
-            />
-            {/* RN Navigation Bottom Tabs */}
-          </HStack>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
@@ -203,46 +437,11 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#D0F4FF',
-    alignItems: 'center',
-    paddingTop: 10
+    alignItems: 'center'
   },
   image: {
     width: 157,
     height: 157
-  },
-  touchableOpacityStyle: {
-    position: 'absolute',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: 10,
-    borderRadius: 18,
-    borderColor: '#158AAD',
-    borderWidth: 1,
-    backgroundColor: '#F4F4F4'
-  },
-  login: {
-    flexDirection: 'row',
-    gap: 10,
-    height: 45,
-    backgroundColor: '#158AAD',
-    borderRadius: 10,
-    padding: 9,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  signup: {
-    flexDirection: 'row',
-    gap: 10,
-    height: 45,
-    backgroundColor: 'transparent',
-    borderRadius: 10,
-    borderColor: '#005D79',
-    borderWidth: 1,
-    padding: 9,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })
 

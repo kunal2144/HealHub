@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const generateToken = require('../config/generateToken')
 const Patient = require('../models/patient')
+const Consultation = require('../models/consultation')
 
 const registerPatient = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body
@@ -66,4 +67,19 @@ const allPatients = asyncHandler(async (req, res) => {
   res.send(patients)
 })
 
-module.exports = { registerPatient, authPatient, allPatients }
+const getConsultations = asyncHandler(async (req, res) => {
+  const { patient } = req
+
+  try {
+    const consultations = await Consultation.find({
+      patient_id: patient._id
+    })
+
+    res.json(consultations)
+  } catch (error) {
+    res.status(500)
+    throw new Error('Failed to get consultations')
+  }
+})
+
+module.exports = { registerPatient, authPatient, allPatients, getConsultations }

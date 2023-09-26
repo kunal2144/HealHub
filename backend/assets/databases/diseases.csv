@@ -1,0 +1,120 @@
+ID,Name,Description,Symptoms,RecoveryMethods
+1,Malaria,"Malaria is a potentially life-threatening disease caused by the Plasmodium parasite. It is primarily transmitted to humans through the bites of infected female mosquitoes.","Fever: Sudden onset of high fever is a common symptom of malaria.
+Chills: Intense shivering and chills often accompany the fever in malaria.
+Sweats: Profuse sweating occurs after the fever and chills subside in malaria.
+Headache: Persistent headaches are a frequent symptom, often accompanied by body aches.
+Anemia: Malaria can lead to a decrease in red blood cells, causing anemia and pale skin.
+Jaundice: Yellowing of the skin and eyes","Medical Treatment: Prescribed antimalarial medications are essential for clearing the parasite from the body.
+Adequate Rest: Rest allows the body to heal and regain strength during the recovery process.
+Hydration: Staying well-hydrated supports the body's immune response and helps manage symptoms."
+2,"Influenza (Flu)","Influenza, commonly known as the flu, is a highly contagious respiratory illness caused by influenza viruses.","Fever: Sudden onset of high fever is a common symptom of the flu.
+Cough: Dry or productive cough is often present.
+Sore Throat: Sore throat and difficulty swallowing.
+Fatigue: Profound fatigue and weakness.
+Muscle Aches: Severe muscle and joint aches.","Antiviral Medications: Prescription antiviral drugs can shorten the duration of the illness.
+Rest: Adequate rest is essential for recovery.
+Fluids: Staying hydrated helps manage symptoms."
+3,"Common Cold","The common cold is a viral infection that primarily affects the nose and throat.","Runny or Stuffy Nose: Nasal congestion or runny nose is common.
+Sneezing: Frequent sneezing and irritation of the throat.
+Cough: A dry or productive cough may be present.
+Sore Throat: Mild to moderate sore throat.
+Watery Eyes: Eyes may become watery or irritated.","Rest: Getting plenty of rest supports the immune system.
+Fluids: Staying well-hydrated helps relieve symptoms.
+Over-the-Counter Medications: Over-the-counter cold remedies can help manage symptoms."
+4,Diabetes,"Diabetes is a chronic condition that affects how your body processes glucose (sugar) in the blood.","Increased Thirst: Excessive thirst and frequent urination.
+Fatigue: Persistent fatigue and weakness.
+Blurred Vision: Blurry vision may occur.
+Unexplained Weight Loss: Weight loss without apparent cause.
+Slow Wound Healing: Wounds take longer to heal.","Insulin or Medications: Insulin therapy or oral medications are used to control blood sugar levels.
+Dietary Management: Monitoring and managing carbohydrate intake.
+Regular Exercise: Physical activity helps control blood sugar levels."
+5,Asthma,"Asthma is a chronic respiratory condition that causes airway inflammation and narrowing, leading to breathing difficulties.","Shortness of Breath: Wheezing and difficulty breathing.
+Coughing: Persistent cough, especially at night.
+Chest Tightness: Feeling of tightness or pressure in the chest.
+Increased Mucus: Increased production of mucus in the airways.","Inhaled Bronchodilators: Short-acting bronchodilators provide rapid relief.
+Long-Term Control Medications: Inhaled corticosteroids and other long-term medications.
+Asthma Action Plan: Developing and following an asthma action plan."
+6,"Hypertension (High Blood Pressure)","Hypertension is a condition characterized by elevated blood pressure levels, which can lead to various health complications.","No Symptoms: Hypertension often has no noticeable symptoms.
+Headache: Severe headaches may occur in some cases.
+Nosebleeds: Occasional nosebleeds may be a sign.
+Fatigue: Unexplained fatigue and weakness.","Lifestyle Changes: Dietary modifications and regular exercise.
+Medications: Antihypertensive medications are prescribed as needed.
+Regular Monitoring: Routine blood pressure monitoring."
+7,Arthritis,"Arthritis is a group of inflammatory joint conditions that cause pain, swelling, and decreased joint mobility.","Joint Pain: Pain and stiffness in one or more joints.
+Swelling: Swelling and redness around affected joints.
+Limited Range of Motion: Reduced joint mobility.
+Fatigue: Generalized fatigue and malaise.","Medications: Nonsteroidal anti-inflammatory drugs (NSAIDs) for pain and inflammation.
+Physical Therapy: Exercises to improve joint function and mobility.
+Joint Injections: Corticosteroid injections for severe symptoms."
+8,"Heart Disease","Heart disease refers to various conditions that affect the heart, including coronary artery disease and heart failure.","Chest Pain (Angina): Chest discomfort or pain.
+Shortness of Breath: Breathlessness, especially during physical activity.
+Fatigue: Persistent fatigue and weakness.
+Irregular Heartbeat: Arrhythmias or palpitations.
+Swelling: Swelling of the legs, ankles, and feet (edema).","Lifestyle Changes: Healthy diet, regular exercise, and smoking cessation.
+Medications: Statins, blood pressure medications, and antiplatelet drugs.
+Surgery: Coronary artery bypass grafting (CABG) or angioplasty in severe cases."
+9,Depression,"Depression is a mood disorder characterized by persistent feelings of sadness, hopelessness, and loss of interest in daily activities.","Persistent Sadness: Overwhelming feelings of sadness and despair.
+Loss of Interest: Loss of interest in activities once enjoyed.
+Fatigue: Unexplained fatigue and low energy.
+Sleep Problems: Changes in sleep patterns (insomnia or excessive sleep).
+Appetite Changes: Changes in appetite and weight.","Psychotherapy: Cognitive-behavioral therapy (CBT) or counseling.
+Antidepressant Medications: Prescribed medications to manage symptoms."
+10,Allergies,"Allergies occur when the immune system reacts to allergens, causing symptoms like sneezing, itching, and congestion.","Sneezing: Frequent sneezing and irritation of the nose.
+Runny Nose: Nasal congestion and a runny nose.
+Itchy Eyes: Itchy and watery eyes.
+Skin Rash: Hives or eczema in some cases.","Avoid Allergens: Identifying and avoiding allergens.
+Antihistamines: Over-the-counter or prescription antihistamines for symptom relief."
+11,Osteoporosis,"Osteoporosis is a condition characterized by weak and brittle bones, increasing the risk of fractures.","Bone Fractures: Fragile bones that are prone to fractures.
+Back Pain: Lower back pain and loss of height over time.
+Posture Changes: Stooped posture (kyphosis) and curvature of the spine.","Calcium and Vitamin D: Adequate calcium and vitamin D intake.
+Medications: Bisphosphonates and other bone-strengthening medications."
+12,"Alzheimer's Disease","Alzheimer's disease is a progressive neurodegenerative disorder that affects memory and cognitive function.","Memory Loss: Gradual memory decline, especially recent memories.
+Confusion: Disorientation and difficulty recognizing loved ones.
+Mood Changes: Mood swings, anxiety, and agitation.
+Difficulty Speaking: Problems with speech and language.","Medications: Cholinesterase inhibitors and memantine.
+Supportive Care: Caregiver support and safety measures."
+13,Pneumonia,"Pneumonia is a lung infection that can be caused by various pathogens, including bacteria, viruses, and fungi.","Fever: High fever, shaking chills, and sweating.
+Cough: Productive cough with mucus.
+Shortness of Breath: Rapid breathing and difficulty breathing.
+Chest Pain: Sharp chest pain, especially when coughing.","Antibiotics (Bacterial Pneumonia): Antibiotics to treat bacterial infections.
+Rest: Adequate rest and hydration."
+14,"Gastroesophageal Reflux Disease (GERD)","GERD is a chronic condition where stomach acid regularly flows back into the esophagus, causing irritation and discomfort.","Heartburn: Frequent and persistent heartburn.
+Regurgitation: Sour or bitter-tasting fluid regurgitation.
+Chest Pain: Chest discomfort and pain.
+Difficulty Swallowing: Difficulty swallowing food or liquids.","Dietary Changes: Avoiding trigger foods and acidic substances.
+Medications: Proton pump inhibitors (PPIs) and antacids."
+15,Stroke,"A stroke occurs when there is a sudden interruption of blood supply to the brain, leading to brain damage.","Sudden Numbness or Weakness: Numbness or weakness in the face, arm, or leg (usually on one side).
+Confusion: Difficulty speaking or understanding speech.
+Severe Headache: Sudden and severe headache.
+Trouble Walking: Loss of balance and coordination.","Emergency Medical Care: Immediate treatment with clot-dissolving drugs or clot retrieval procedures.
+Rehabilitation: Physical and speech therapy for recovery."
+16,"Eczema (Atopic Dermatitis)","Eczema is a chronic skin condition characterized by itchy and inflamed skin.","Itchy Skin: Intense itching and discomfort.
+Redness: Red, inflamed patches of skin.
+Dry Skin: Dry, scaly, or thickened skin.
+Rash: Rash or blisters in severe cases.","Topical Steroids: Corticosteroid creams or ointments for inflammation.
+Emollients: Moisturizers to keep the skin hydrated."
+17,"Chronic Obstructive Pulmonary Disease (COPD)","COPD is a progressive lung disease that obstructs airflow, making it difficult to breathe.","Shortness of Breath: Gradual onset of breathlessness.
+Chronic Cough: Persistent cough with mucus production.
+Wheezing: Whistling sound during breathing.
+Chest Tightness: Feeling of tightness in the chest.","Bronchodilators: Inhaled medications to open airways.
+Lifestyle Changes: Smoking cessation and avoiding irritants."
+18,"Breast Cancer","Breast cancer is a malignant tumor that forms in the breast tissue and can spread to other parts of the body.","Lump in the Breast: A painless lump in the breast or underarm.
+Change in Breast Size or Shape: Changes in breast appearance.
+Nipple Changes: Nipple discharge or inversion.
+Breast Pain: Unexplained breast pain.","Surgery: Lumpectomy or mastectomy to remove tumors.
+Chemotherapy and Radiation: Cancer-fighting treatments."
+19,Migraine,"Migraine is a type of headache disorder characterized by severe, throbbing head pain often accompanied by other symptoms.","Severe Headache: Intense and pulsating headache.
+Nausea: Nausea and vomiting.
+Sensitivity to Light: Photophobia (sensitivity to light).
+Sensitivity to Sound: Phonophobia (sensitivity to sound).","Medications: Prescription medications for pain relief and prevention.
+Lifestyle Management: Identifying triggers and making lifestyle changes."
+20,"Ovarian Cancer","Ovarian cancer is a type of cancer that forms in the ovaries, often with subtle or vague symptoms in the early stages.","Abdominal Discomfort: Pelvic or abdominal pain and discomfort.
+Bloating: Persistent bloating and feeling of fullness.
+Changes in Bowel Habits: Changes in bowel movements.
+Fatigue: Unexplained fatigue.","Surgery: Removal of ovarian tumors and surrounding tissue.
+Chemotherapy: Cancer-fighting medications."
+21,Glaucoma,"Glaucoma is an eye condition characterized by increased pressure in the eye, which can damage the optic nerve and lead to vision loss.","Gradual Vision Loss: Gradual loss of peripheral vision.
+Eye Pain: Pain and discomfort in the eye.
+Blurry Vision: Blurred vision and halos around lights.
+Redness: Redness in the eye.","Eye Drops: Prescription eye drops to lower intraocular pressure.
+Surgery: Surgical procedures to improve fluid drainage."
