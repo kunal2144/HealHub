@@ -4,8 +4,11 @@ const { parse } = require('csv-parse')
 const path = require('path')
 
 const getOneDisease = asyncHandler(async (req, res) => {
-  const rowToRetrieve =
-    ((new Date().getFullYear() % 4 === 0 ? 366 : 365) % 21) + 1
+  var now = new Date()
+  var start = new Date(now.getFullYear(), 0, 0)
+  var diff = now - start
+  var oneDay = 1000 * 60 * 60 * 24
+  var rowToRetrieve = (Math.floor(diff / oneDay) % 21) + 1
   let rowIndex = 0
 
   try {
