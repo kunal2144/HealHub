@@ -164,7 +164,6 @@ const Home = ({ navigation }) => {
                       fontSize={16}
                       color="#ffffff"
                       numberOfLines={5}
-                      height={100}
                     >
                       {disease['Description']}
                     </Text>

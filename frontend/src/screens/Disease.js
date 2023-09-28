@@ -12,7 +12,7 @@ const Disease = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <View height={'100%'} width={'95%'}>
         <ScrollView>
-          <VStack gap={10}>
+          <VStack gap={10} style={{ marginBottom: 20 }}>
             <HStack justifyContent="space-between" gap={10}>
               <Button
                 backgroundColor="#158AAD"
