@@ -49,6 +49,7 @@ export default function App() {
           setLoggedIn(false)
         }
       } catch (error) {
+        setLoggedIn(false)
         console.log(error)
       }
     }

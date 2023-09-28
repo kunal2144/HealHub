@@ -71,9 +71,20 @@ const getConsultations = asyncHandler(async (req, res) => {
   const { patient } = req
 
   try {
-    const consultations = await Consultation.find({
-      patient_id: patient._id
+    const upcoming = await Consultation.find({
+      patient_id: patient._id,
+      start_time: { $gte: Date.now() }
     })
+
+    const past = await Consultation.find({
+      patient_id: patient._id,
+      end_time: { $lt: Date.now() }
+    })
+
+    const consultations = {
+      upcoming,
+      past
+    }
 
     res.json(consultations)
   } catch (error) {

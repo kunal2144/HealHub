@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native'
 import { PropTypes } from 'prop-types'
 import { AntDesign } from '@expo/vector-icons'
 import { ScrollView } from 'react-native-gesture-handler'
+import global from '../styles'
 
 const Disease = ({ navigation, route }) => {
   const { disease } = route.params
@@ -12,7 +13,7 @@ const Disease = ({ navigation, route }) => {
     <SafeAreaView style={styles.container}>
       <View height={'100%'} width={'95%'}>
         <ScrollView>
-          <VStack gap={10} style={{ marginBottom: 20 }}>
+          <VStack gap={15} style={{ marginBottom: 20 }}>
             <HStack justifyContent="space-between" gap={10}>
               <Button
                 backgroundColor="#158AAD"
@@ -24,6 +25,7 @@ const Disease = ({ navigation, route }) => {
                 alignItems="center"
                 flex={1}
                 onPress={() => navigation.navigate('Diseases')}
+                style={global.shadow}
               >
                 <Text color="white" fontFamily="Poppins_400Regular" size="lg">
                   View All
@@ -40,6 +42,7 @@ const Disease = ({ navigation, route }) => {
                 flex={1}
                 gap={10}
                 onPress={() => navigation.goBack()}
+                style={global.shadow}
               >
                 <AntDesign name="arrowleft" size={24} color="white" />
                 <Text color="white" fontFamily="Poppins_400Regular" size="lg">
@@ -56,6 +59,7 @@ const Disease = ({ navigation, route }) => {
               borderRadius={18}
               justifyContent="center"
               alignItems="center"
+              style={global.shadow}
             >
               <Text color="white" fontFamily="Poppins_700Bold" size="3xl">
                 {disease['Name'].toUpperCase()}
@@ -70,6 +74,7 @@ const Disease = ({ navigation, route }) => {
               justifyContent="center"
               alignItems="center"
               padding={10}
+              style={global.shadow}
             >
               <Text color="white" fontFamily="Poppins_400Regular" size="lg">
                 {disease['Description']}
@@ -83,6 +88,7 @@ const Disease = ({ navigation, route }) => {
               borderRadius={18}
               justifyContent="center"
               padding={10}
+              style={global.shadow}
             >
               <Box
                 borderRadius={15}
@@ -90,7 +96,6 @@ const Disease = ({ navigation, route }) => {
                 borderWidth={1}
                 backgroundColor="#D0F4FF"
                 width={'100%'}
-                paddingHorizontal={5}
                 justifyContent="center"
                 alignItems="center"
                 padding={5}
@@ -101,11 +106,16 @@ const Disease = ({ navigation, route }) => {
                 </Text>
               </Box>
               {disease['Symptoms'].split('\n').map((symptom) => (
-                <HStack key={symptom}>
+                <HStack key={symptom} alignItems="flex-start">
                   <Text color="white" fontFamily="Poppins_700Bold" size="2xl">
-                    {'• '}
+                    •{' '}
                   </Text>
-                  <Text color="white" fontFamily="Poppins_400Regular" size="lg">
+                  <Text
+                    color="white"
+                    fontFamily="Poppins_400Regular"
+                    size="lg"
+                    flexShrink={1}
+                  >
                     {symptom.trim()}
                   </Text>
                 </HStack>
@@ -119,6 +129,7 @@ const Disease = ({ navigation, route }) => {
               borderRadius={18}
               justifyContent="center"
               padding={10}
+              style={global.shadow}
             >
               <Box
                 borderRadius={15}
@@ -126,7 +137,6 @@ const Disease = ({ navigation, route }) => {
                 borderWidth={1}
                 backgroundColor="#D0F4FF"
                 width={'100%'}
-                paddingHorizontal={5}
                 justifyContent="center"
                 alignItems="center"
                 padding={5}
@@ -139,9 +149,14 @@ const Disease = ({ navigation, route }) => {
               {disease['RecoveryMethods'].split('\n').map((method) => (
                 <HStack key={method}>
                   <Text color="white" fontFamily="Poppins_700Bold" size="2xl">
-                    {'• '}
+                    •{' '}
                   </Text>
-                  <Text color="white" fontFamily="Poppins_400Regular" size="lg">
+                  <Text
+                    color="white"
+                    fontFamily="Poppins_400Regular"
+                    size="lg"
+                    flexShrink={1}
+                  >
                     {method.trim()}
                   </Text>
                 </HStack>

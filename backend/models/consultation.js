@@ -4,15 +4,9 @@ const consultationSchema = new mongoose.Schema(
   {
     patient_id: { type: String, required: true, trim: true },
     doctor_id: { type: String, required: true, trim: true },
-    date: { type: Date, required: true },
-    start_time: { type: String, required: true, trim: true },
-    end_time: { type: String, required: true, trim: true },
-    chat_id: { type: String, required: true, trim: true },
-    status: {
-      type: String,
-      enum: ['completed', 'missed', 'scheduled'],
-      required: true
-    }
+    start_datetime: { type: Date, required: true, trim: true },
+    end_datetime: { type: Date, trim: true },
+    chat_id: { type: String, required: true, trim: true }
   },
   {
     timestamps: true

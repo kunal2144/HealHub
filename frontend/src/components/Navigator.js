@@ -13,6 +13,8 @@ import Consultations from '../screens/Consultations'
 import Profile from '../screens/Profile'
 import Disease from '../screens/Disease'
 import Diseases from '../screens/Diseases'
+import Settings from '../screens/Settings'
+import SettingsButton from './SettingsButton'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -95,6 +97,13 @@ export function BottomTabs() {
         component={Profile}
         options={{
           tabBarIcon: ({ focused }) => <ProfileButton focused={focused} />
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarIcon: ({ focused }) => <SettingsButton focused={focused} />
         }}
       />
     </Tab.Navigator>
