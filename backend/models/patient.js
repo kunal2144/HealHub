@@ -6,15 +6,12 @@ const patientSchema = new mongoose.Schema(
     first_name: { type: String, required: true, trim: true },
     last_name: { type: String, required: true, trim: true },
     email: { type: String, unique: true, required: true, trim: true },
-    password: { type: String, required: true }
-    // username: { type: String, required: true, trim: true },
-    // date_of_birth: { type: Date, required: true },
-    // age: { type: Number, required: true },
-    // gender: { type: String, trim: true },
-    // phone_no: { type: String, unique: true, required: true, trim: true },
-    // family_id: { type: Number, ref: 'Family' },
-    // aadhar_number: { type: String, trim: true },
-    // address_id: { type: Number, ref: 'Address' }
+    password: { type: String, required: true },
+    date_of_birth: { type: Date },
+    gender: { type: String, trim: true },
+    phone_no: { type: String, unique: true, trim: true },
+    blood_group: { type: String, trim: true },
+    family_members: { type: Array, default: [] }
   },
   {
     timestamps: true

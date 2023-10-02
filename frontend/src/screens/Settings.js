@@ -1,8 +1,11 @@
-import { Text } from '@gluestack-ui/react'
-import React from 'react'
+import { Button, Text } from '@gluestack-ui/react'
+import React, { useContext } from 'react'
 import { SafeAreaView } from 'react-native'
+import { logout } from '../../lib/logout'
+import { AuthContext } from '../components/AuthContext'
 
 const Settings = () => {
+  const { setUserToken } = useContext(AuthContext)
   return (
     <SafeAreaView
       style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}
@@ -13,6 +16,11 @@ const Settings = () => {
       <Text fontFamily="Poppins_600SemiBold" size="lg" color="#158AAD">
         Coming Soon
       </Text>
+      <Button marginTop={30} onPress={() => logout(setUserToken)}>
+        <Text fontFamily="Poppins_600SemiBold" size="md" color="white">
+          Log Out
+        </Text>
+      </Button>
     </SafeAreaView>
   )
 }

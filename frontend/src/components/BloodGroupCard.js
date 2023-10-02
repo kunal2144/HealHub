@@ -1,8 +1,10 @@
 import { Box, Button, Text, VStack } from '@gluestack-ui/react'
 import global from '../styles'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from './AuthContext'
 
 const BloodGroupCard = ({ navigation }) => {
+  const { userData } = useContext(AuthContext)
   return (
     <Box
       width={'40%'}
@@ -31,7 +33,7 @@ const BloodGroupCard = ({ navigation }) => {
           fontSize={70}
           color="#ffffff"
         >
-          AB+
+          {userData.bloodGroup ? userData.bloodGroup : 'N/A'}
         </Text>
         <Button
           borderRadius={15}

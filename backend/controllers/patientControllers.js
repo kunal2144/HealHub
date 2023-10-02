@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const generateToken = require('../config/generateToken')
 const Patient = require('../models/patient')
 const Consultation = require('../models/consultation')
+const FamilyMember = require('../models/family-member')
 
 const registerPatient = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body
@@ -41,11 +42,16 @@ const authPatient = asyncHandler(async (req, res) => {
 
   if (patient && (await patient.matchPassword(password))) {
     res.json({
-      _id: patient._id,
+      token: generateToken(patient._id),
       firstName: patient.first_name,
       lastName: patient.last_name,
       email: patient.email,
-      token: generateToken(patient._id)
+      dob: patient.date_of_birth.toISOString().split('T')[0],
+      phoneNumber: patient.phone_no,
+      age: patient.age,
+      bloodGroup: patient.blood_group,
+      gender: patient.gender,
+      familyMembers: patient.family_members
     })
   } else {
     res.status(401)
@@ -93,4 +99,97 @@ const getConsultations = asyncHandler(async (req, res) => {
   }
 })
 
-module.exports = { registerPatient, authPatient, allPatients, getConsultations }
+const updateProfile = asyncHandler(async (req, res) => {
+  const data = req.body
+  const { patient } = req
+
+  try {
+    const updatedPatient = await Patient.findOneAndUpdate(
+      { _id: patient._id },
+      { $set: data },
+      { new: true }
+    )
+
+    res.json({
+      token: generateToken(updatedPatient._id),
+      firstName: updatedPatient.first_name,
+      lastName: updatedPatient.last_name,
+      email: updatedPatient.email,
+      dob: updatedPatient.date_of_birth.toISOString().split('T')[0],
+      phoneNumber: updatedPatient.phone_no,
+      bloodGroup: updatedPatient.blood_group,
+      gender: updatedPatient.gender,
+      familyMembers: patient.family_members
+    })
+  } catch (error) {
+    console.log(error)
+    if (error) res.status(500)
+    throw new Error('Failed to update profile')
+  }
+})
+
+const getMembers = asyncHandler(async (req, res) => {
+  const { patient } = req
+
+  try {
+    const members = await FamilyMember.find({
+      _id: { $in: patient.family_members }
+    }).lean()
+
+    updatedMembers = members.map((member) => {
+      return {
+        ...member,
+        date_of_birth: member.date_of_birth.toISOString().split('T')[0]
+      }
+    })
+
+    res.json(updatedMembers)
+  } catch (error) {
+    res.status(500)
+    throw new Error('Failed to get members')
+  }
+})
+
+const addMember = asyncHandler(async (req, res) => {
+  const { patient } = req
+  const { first_name, last_name, date_of_birth, gender, blood_group } = req.body
+
+  if ((!first_name, !last_name, !date_of_birth, !gender, !blood_group))
+    return res.json({ error: 'Please fill all the fields' })
+
+  try {
+    const member = await FamilyMember.create({
+      first_name,
+      last_name,
+      date_of_birth,
+      gender,
+      blood_group
+    })
+
+    const updatedPatient = await Patient.findOneAndUpdate(
+      {
+        _id: patient._id
+      },
+      {
+        $push: {
+          family_members: member._id
+        }
+      }
+    )
+
+    res.json(member)
+  } catch (error) {
+    res.status(500)
+    throw new Error('Failed to add member')
+  }
+})
+
+module.exports = {
+  registerPatient,
+  authPatient,
+  allPatients,
+  getConsultations,
+  updateProfile,
+  getMembers,
+  addMember
+}

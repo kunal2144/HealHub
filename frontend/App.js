@@ -34,14 +34,16 @@ export default function App() {
         setUserToken(token)
         setUserData(data)
         if (token) {
-          const {
-            data: { valid }
-          } = await axios.post(`${BASE_URL}api/user/verify-token`, {
-            token
-          })
+          const { data } = await axios.post(
+            `${BASE_URL}api/user/verify-token`,
+            {
+              token
+            }
+          )
 
-          if (valid) {
+          if (!data.error) {
             setLoggedIn(true)
+            setUserData(data)
           } else {
             setLoggedIn(false)
           }
