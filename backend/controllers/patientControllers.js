@@ -184,6 +184,39 @@ const addMember = asyncHandler(async (req, res) => {
   }
 })
 
+const deleteMember = asyncHandler(async (req, res) => {
+  const { id } = req.query
+  const { patient_id } = req.patient
+
+  try {
+    const result = await FamilyMember.deleteOne({ _id: id })
+
+    if (result.deletedCount === 0) {
+      res.status(404)
+      throw new Error('Member not found')
+    }
+
+    const patient = await Patient.findOneAndUpdate(
+      {
+        _id: patient_id
+      },
+      {
+        $pull: {
+          family_members: id
+        }
+      },
+      {
+        new: true
+      }
+    )
+
+    res.status(200).json({ message: 'Member deleted' })
+  } catch (error) {
+    res.status(500)
+    throw new Error('Failed to delete member')
+  }
+})
+
 module.exports = {
   registerPatient,
   authPatient,
@@ -191,5 +224,6 @@ module.exports = {
   getConsultations,
   updateProfile,
   getMembers,
-  addMember
+  addMember,
+  deleteMember
 }

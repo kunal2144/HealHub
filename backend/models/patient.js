@@ -9,7 +9,7 @@ const patientSchema = new mongoose.Schema(
     password: { type: String, required: true },
     date_of_birth: { type: Date },
     gender: { type: String, trim: true },
-    phone_no: { type: String, unique: true, trim: true },
+    phone_no: { type: String, trim: true },
     blood_group: { type: String, trim: true },
     family_members: { type: Array, default: [] }
   },

@@ -78,6 +78,34 @@ const FamilyInformation = ({ userData, setUserData, isFree, setIsFree }) => {
     }
   }
 
+  const deleteMember = async (id) => {
+    try {
+      await axios.get(`${BASE_URL}api/patient/delete-member`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userData.token}`
+        },
+        params: {
+          id
+        }
+      })
+
+      setUserData((user) => ({
+        ...user,
+        familyMembers: user.familyMembers.filter((member) => member != id)
+      }))
+      setMemberData((members) => {
+        let updatedMembers = {
+          ...members
+        }
+        delete updatedMembers[id]
+        return updatedMembers
+      })
+    } catch (error) {
+      console.log(error.response.data.message)
+    }
+  }
+
   return (
     <Box
       borderRadius={20}
@@ -282,7 +310,9 @@ const FamilyInformation = ({ userData, setUserData, isFree, setIsFree }) => {
                       backgroundColor="#D0F4FF"
                       height={35}
                       isDisabled={!isFree}
-                      onPress={() => {}}
+                      onPress={() => {
+                        deleteMember(id)
+                      }}
                     >
                       <Feather name="trash" size={20} color="black" />
                     </Button>

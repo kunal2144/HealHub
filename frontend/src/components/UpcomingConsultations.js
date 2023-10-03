@@ -2,8 +2,7 @@ import { Box, Button, HStack, Image, Text, VStack } from '@gluestack-ui/react'
 import DoctorImage from '../assets/stock-doctor.jpeg'
 import DoctorImageThumbs from '../assets/stock-doctor-thumbs-up.jpg'
 import global from '../styles'
-import React, { useContext } from 'react'
-import { AuthContext } from './AuthContext'
+import React from 'react'
 
 const UpcomingConsultations = ({ navigation }) => {
   return (
@@ -100,8 +99,6 @@ const UpcomingConsultations = ({ navigation }) => {
 }
 
 const NoUpcomingConsultations = ({ navigation }) => {
-  const { userData } = useContext(AuthContext)
-
   return (
     <Box
       borderRadius={20}
@@ -131,7 +128,7 @@ const NoUpcomingConsultations = ({ navigation }) => {
               size="lg"
               flexShrink={1}
             >
-              No upcoming appointments {userData.firstName}!
+              No upcoming appointments!
             </Text>
             <Text
               color="#ffffff"
@@ -139,8 +136,8 @@ const NoUpcomingConsultations = ({ navigation }) => {
               size="sm"
               flexShrink={1}
             >
-              Someone&apos;s been keeping well!{'\n'}If you ever feel the need
-              for a check, we&apos;re right here!
+              Someone&apos;s been keeping well! If you ever feel the need for a
+              check, we&apos;re right here!
             </Text>
           </VStack>
         </HStack>

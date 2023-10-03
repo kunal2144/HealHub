@@ -6,7 +6,8 @@ const {
   getConsultations,
   updateProfile,
   getMembers,
-  addMember
+  addMember,
+  deleteMember
 } = require('../controllers/patientControllers')
 const { protect } = require('../middleware/authMiddleware')
 
@@ -18,7 +19,7 @@ router.post('/get-consultations', protect, getConsultations)
 router.post('/update-profile', protect, updateProfile)
 router.post('/get-members', protect, getMembers)
 router.post('/add-member', protect, addMember)
+router.get('/delete-member', protect, deleteMember)
 // router.post('/update-member', protect, updateMember)
-// router.post('/delete-member', protect, deleteMember)
 
 module.exports = router
