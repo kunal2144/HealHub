@@ -42,6 +42,7 @@ const FamilyInformation = ({ userData, setUserData, isFree, setIsFree }) => {
   }, [userData.familyMembers])
 
   const addMember = async () => {
+    //TODO: Validate the data before sending it to the server
     try {
       const member = await axios.post(
         `${BASE_URL}api/patient/add-member`,
@@ -70,7 +71,6 @@ const FamilyInformation = ({ userData, setUserData, isFree, setIsFree }) => {
           [member.data._id]: members['new']
         }
         delete updatedMembers['new']
-        console.log(updatedMembers)
         return updatedMembers
       })
     } catch (error) {

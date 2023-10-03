@@ -3,6 +3,7 @@ const generateToken = require('../config/generateToken')
 const Patient = require('../models/patient')
 const Consultation = require('../models/consultation')
 const FamilyMember = require('../models/family-member')
+const mongoose = require('mongoose')
 
 const registerPatient = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password } = req.body
@@ -166,13 +167,15 @@ const addMember = asyncHandler(async (req, res) => {
       blood_group
     })
 
+    const idToAdd = new mongoose.Types.ObjectId(member._id)
+
     const updatedPatient = await Patient.findOneAndUpdate(
       {
         _id: patient._id
       },
       {
         $push: {
-          family_members: member._id
+          family_members: idToAdd
         }
       }
     )
@@ -186,7 +189,8 @@ const addMember = asyncHandler(async (req, res) => {
 
 const deleteMember = asyncHandler(async (req, res) => {
   const { id } = req.query
-  const { patient_id } = req.patient
+  const { patient } = req
+  const idToRemove = new mongoose.Types.ObjectId(id)
 
   try {
     const result = await FamilyMember.deleteOne({ _id: id })
@@ -196,18 +200,20 @@ const deleteMember = asyncHandler(async (req, res) => {
       throw new Error('Member not found')
     }
 
-    const patient = await Patient.findOneAndUpdate(
-      {
-        _id: patient_id
-      },
-      {
-        $pull: {
-          family_members: id
+    console.log(
+      await Patient.findOneAndUpdate(
+        {
+          _id: patient._id
+        },
+        {
+          $pull: {
+            family_members: idToRemove
+          }
+        },
+        {
+          new: true
         }
-      },
-      {
-        new: true
-      }
+      )
     )
 
     res.status(200).json({ message: 'Member deleted' })
