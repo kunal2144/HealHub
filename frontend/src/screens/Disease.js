@@ -24,7 +24,7 @@ const Disease = ({ navigation, route }) => {
                 justifyContent="center"
                 alignItems="center"
                 flex={1}
-                onPress={() => navigation.navigate('Diseases')}
+                onPress={() => navigation.navigate('Diseases', { navigation })}
                 style={global.shadow}
               >
                 <Text color="white" fontFamily="Poppins_400Regular" size="lg">
