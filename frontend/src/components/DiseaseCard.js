@@ -44,7 +44,7 @@ const DiseaseCard = ({ navigation, disease }) => {
           paddingHorizontal={5}
           height={35}
           onPress={() =>
-            navigation.navigate('Disease', {
+            navigation.push('Disease', {
               disease
             })
           }

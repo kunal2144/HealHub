@@ -25,6 +25,8 @@ export default function App() {
   const [userToken, setUserToken] = useState(null)
   const [userData, setUserData] = useState(null)
   const [loggedIn, setLoggedIn] = useState(null)
+  const [consultations, setConsultations] = useState(null)
+  const [diseases, setDiseases] = useState([])
 
   useEffect(() => {
     const _retriveData = async () => {
@@ -85,7 +87,16 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthContext.Provider
-        value={{ userToken, setUserToken, userData, setUserData }}
+        value={{
+          userToken,
+          setUserToken,
+          userData,
+          setUserData,
+          diseases,
+          setDiseases,
+          consultations,
+          setConsultations
+        }}
       >
         <GluestackUIProvider config={config.theme}>
           <NavigationContainer>

@@ -1,9 +1,15 @@
 import { Box, HStack, Image, Text, VStack, Button } from '@gluestack-ui/react'
 import DoctorImage from '../assets/stock-doctor.jpeg'
 import global from '../styles'
-import React from 'react'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
+import { AuthContext } from './AuthContext'
 
 const PreviousConsultations = ({ navigation }) => {
+  const { consultations } = useContext(AuthContext)
+  if (consultations['past'].length === 0) {
+    return <NoPreviousConsultations />
+  }
   return (
     <Box
       borderRadius={20}
@@ -13,86 +19,57 @@ const PreviousConsultations = ({ navigation }) => {
       style={global.shadow}
     >
       <VStack gap={10} padding={20}>
-        <Box
-          borderRadius={20}
-          backgroundColor="#D0F4FF"
-          borderColor="black"
-          borderWidth={1}
-          padding={10}
+        <Text
+          fontFamily={'Poppins_600SemiBold'}
+          color={'white'}
+          size="lg"
+          textAlign="center"
         >
-          <HStack justifyContent="space-between" alignItems="center">
-            <Image
-              source={DoctorImage}
-              size="sm"
-              borderColor="white"
-              borderWidth={2}
-              borderRadius={100}
-            />
-            <Box height={'100%'} width={1} backgroundColor="black"></Box>
-            <VStack>
-              <Text fontFamily="Poppins_700Bold" color="black">
-                Dr. Ajin Giny K.
-              </Text>
-              <Text color="black">Orthopaedic</Text>
-              <Text color="black">12/06/2023</Text>
-            </VStack>
-            <Box height={'100%'} width={1} backgroundColor="black"></Box>
-            <Button
-              backgroundColor="#D0F4FF"
-              height={35}
-              onPress={() => navigation.navigate('Consultations')}
-            >
-              <Text
-                fontSize={16}
-                fontFamily="Poppins_600SemiBold"
-                color="black"
-                marginRight={10}
+          Previous Consultations
+        </Text>
+        {consultations['past'].map((consultation, index) => (
+          <Box
+            borderRadius={20}
+            backgroundColor="#D0F4FF"
+            borderColor="black"
+            borderWidth={1}
+            padding={10}
+            key={index}
+          >
+            <HStack justifyContent="space-between" alignItems="center">
+              <Image
+                source={DoctorImage}
+                size="sm"
+                borderColor="white"
+                borderWidth={2}
+                borderRadius={100}
+              />
+              <Box height={'100%'} width={1} backgroundColor="black"></Box>
+              <VStack>
+                <Text fontFamily="Poppins_700Bold" color="black">
+                  Dr. Ajin Giny K.
+                </Text>
+                <Text color="black">Orthopaedic</Text>
+                <Text color="black">12/06/2023</Text>
+              </VStack>
+              <Box height={'100%'} width={1} backgroundColor="black"></Box>
+              <Button
+                backgroundColor="#D0F4FF"
+                height={35}
+                onPress={() => navigation.navigate('Consultations')}
               >
-                View
-              </Text>
-            </Button>
-          </HStack>
-        </Box>
-        <Box
-          borderRadius={20}
-          backgroundColor="#D0F4FF"
-          borderColor="black"
-          borderWidth={1}
-          padding={10}
-        >
-          <HStack justifyContent="space-between" alignItems="center">
-            <Image
-              source={DoctorImage}
-              size="sm"
-              borderColor="white"
-              borderWidth={2}
-              borderRadius={100}
-            />
-            <Box height={'100%'} width={1} backgroundColor="black"></Box>
-            <VStack>
-              <Text fontFamily="Poppins_700Bold" color="black">
-                Dr. Ajin Giny K.
-              </Text>
-              <Text color="black">Orthopaedic</Text>
-              <Text color="black">12/06/2023</Text>
-            </VStack>
-            <Box height={'100%'} width={1} backgroundColor="black"></Box>
-            <Button
-              backgroundColor="#D0F4FF"
-              height={35}
-              onPress={() => navigation.navigate('Consultations')}
-            >
-              <Text
-                fontSize={16}
-                fontFamily="Poppins_600SemiBold"
-                color="black"
-                marginRight={10}
-              >
-                View
-              </Text>
-            </Button>
-          </HStack>
-        </Box>
+                <Text
+                  fontSize={16}
+                  fontFamily="Poppins_600SemiBold"
+                  color="black"
+                  marginRight={10}
+                >
+                  View
+                </Text>
+              </Button>
+            </HStack>
+          </Box>
+        ))}
         <Button
           borderRadius={15}
           borderColor="black"
@@ -110,6 +87,11 @@ const PreviousConsultations = ({ navigation }) => {
       </VStack>
     </Box>
   )
+}
+
+PreviousConsultations.propTypes = {
+  navigation: PropTypes.object,
+  consultations: PropTypes.object
 }
 
 const NoPreviousConsultations = () => {

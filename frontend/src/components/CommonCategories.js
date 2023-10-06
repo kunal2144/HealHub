@@ -54,7 +54,12 @@ const CommonCategories = ({ navigation }) => {
         {categories.map((category, index) => (
           <VStack gap={2} alignItems="center" key={index}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Consultations')}
+              onPress={() =>
+                navigation.navigate('Book', {
+                  category: category.name,
+                  image: category.image
+                })
+              }
             >
               <Image
                 source={category.image}

@@ -3,7 +3,6 @@ const {
   registerPatient,
   authPatient,
   allPatients,
-  getConsultations,
   updateProfile,
   getMembers,
   addMember,
@@ -15,7 +14,6 @@ const router = express.Router()
 
 router.route('/').post(registerPatient).get(protect, allPatients)
 router.post('/login', authPatient)
-router.post('/get-consultations', protect, getConsultations)
 router.post('/update-profile', protect, updateProfile)
 router.post('/get-members', protect, getMembers)
 router.post('/add-member', protect, addMember)

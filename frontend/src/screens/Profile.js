@@ -20,7 +20,7 @@ const Profile = () => {
           >
             <VStack gap={15} marginTop={10} marginBottom={50}>
               <VStack gap={5}>
-                <HStack gap={10}>
+                <HStack gap={10} alignItems="center">
                   <Ionicons name="person-outline" size={24} color="black" />
                   <Text color="black" fontFamily="Poppins_700Bold" size="2xl">
                     Profile Management

@@ -2,9 +2,33 @@ import { Box, Button, HStack, Image, Text, VStack } from '@gluestack-ui/react'
 import DoctorImage from '../assets/stock-doctor.jpeg'
 import DoctorImageThumbs from '../assets/stock-doctor-thumbs-up.jpg'
 import global from '../styles'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from './AuthContext'
+import PropTypes from 'prop-types'
 
-const UpcomingConsultations = ({ navigation }) => {
+const UpcomingConsultations = ({ navigation, basic }) => {
+  const { consultations } = useContext(AuthContext)
+  if (consultations['upcoming'].length === 0) {
+    if (!basic) {
+      return <NoUpcomingConsultations navigation={navigation} />
+    } else {
+      return (
+        <Box
+          borderRadius={20}
+          backgroundColor="#158AAD"
+          borderColor="black"
+          borderWidth={1}
+          style={global.shadow}
+        >
+          <VStack gap={10} padding={20}>
+            <Text fontFamily="Poppins_700Bold" color="white" textAlign="center">
+              No Upcoming Appointments
+            </Text>
+          </VStack>
+        </Box>
+      )
+    }
+  }
   return (
     <Box
       borderRadius={20}
@@ -96,6 +120,15 @@ const UpcomingConsultations = ({ navigation }) => {
       </VStack>
     </Box>
   )
+}
+
+UpcomingConsultations.defaultProps = {
+  basic: false
+}
+
+UpcomingConsultations.propTypes = {
+  navigation: PropTypes.object,
+  basic: PropTypes.bool
 }
 
 const NoUpcomingConsultations = ({ navigation }) => {

@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const generateToken = require('../config/generateToken')
 const Patient = require('../models/patient')
-const Consultation = require('../models/consultation')
 const FamilyMember = require('../models/family-member')
 const mongoose = require('mongoose')
 
@@ -72,32 +71,6 @@ const allPatients = asyncHandler(async (req, res) => {
   })
 
   res.send(patients)
-})
-
-const getConsultations = asyncHandler(async (req, res) => {
-  const { patient } = req
-
-  try {
-    const upcoming = await Consultation.find({
-      patient_id: patient._id,
-      start_time: { $gte: Date.now() }
-    })
-
-    const past = await Consultation.find({
-      patient_id: patient._id,
-      end_time: { $lt: Date.now() }
-    })
-
-    const consultations = {
-      upcoming,
-      past
-    }
-
-    res.json(consultations)
-  } catch (error) {
-    res.status(500)
-    throw new Error('Failed to get consultations')
-  }
 })
 
 const updateProfile = asyncHandler(async (req, res) => {
@@ -227,7 +200,6 @@ module.exports = {
   registerPatient,
   authPatient,
   allPatients,
-  getConsultations,
   updateProfile,
   getMembers,
   addMember,

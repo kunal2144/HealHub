@@ -13,31 +13,19 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import { BASE_URL } from '@env'
 import axios from 'axios'
 import global from '../styles'
-import {
-  UpcomingConsultations,
-  NoUpcomingConsultations
-} from '../components/UpcomingConsultations'
-import {
-  PreviousConsultations,
-  NoPreviousConsultations
-} from '../components/PreviousConsultations'
+import { UpcomingConsultations } from '../components/UpcomingConsultations'
 import CommonCategories from '../components/CommonCategories'
 import DiseaseCard from '../components/DiseaseCard'
 import BloodGroupCard from '../components/BloodGroupCard'
 
 const Home = ({ navigation }) => {
-  const { userData, userToken } = useContext(AuthContext)
+  const { userData, userToken, setDiseases, consultations, setConsultations } =
+    useContext(AuthContext)
   const [disease, setDisease] = useState(null)
-  const [consultations, setConsultations] = useState(null)
 
   useEffect(() => {
-    async function fetchData() {
+    async function getConsultations() {
       try {
-        const diseaseConfig = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
         const consultationsConfig = {
           headers: {
             'Content-Type': 'application/json',
@@ -45,24 +33,46 @@ const Home = ({ navigation }) => {
           }
         }
 
-        const [diseaseResponse, consultationsResponse] = await Promise.all([
-          axios.get(`${BASE_URL}api/disease/today`, {}, diseaseConfig),
-          axios.post(
-            `${BASE_URL}api/patient/get-consultations`,
-            {},
-            consultationsConfig
-          )
-        ])
+        const response = await axios.post(
+          `${BASE_URL}api/consultation/get-consultations`,
+          {},
+          consultationsConfig
+        )
 
-        setDisease(diseaseResponse.data)
-        setConsultations(consultationsResponse.data)
+        setConsultations(response.data)
       } catch (error) {
         console.log(error)
       }
     }
 
-    fetchData()
+    const getDiseases = async () => {
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+
+        const response = await axios.get(`${BASE_URL}api/disease`, {}, config)
+
+        let now = new Date()
+        let start = new Date(now.getFullYear(), 0, 0)
+        let diff = now - start
+        let oneDay = 1000 * 60 * 60 * 24
+        let rowToRetrieve = Math.floor(diff / oneDay) % 21
+
+        setDisease(response.data[rowToRetrieve])
+        setDiseases(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getConsultations()
+    getDiseases()
   }, [])
+
+  useEffect(() => {}, [])
 
   if (disease === null || consultations === null) return null
 
@@ -112,16 +122,7 @@ const Home = ({ navigation }) => {
                 <BloodGroupCard navigation={navigation} />
                 <DiseaseCard navigation={navigation} disease={disease} />
               </HStack>
-              {consultations['upcoming'].length > 0 ? (
-                <UpcomingConsultations navigation={navigation} />
-              ) : (
-                <NoUpcomingConsultations navigation={navigation} />
-              )}
-              {consultations['past'].length > 0 ? (
-                <PreviousConsultations navigation={navigation} />
-              ) : (
-                <NoPreviousConsultations navigation={navigation} />
-              )}
+              <UpcomingConsultations navigation={navigation} />
               <CommonCategories navigation={navigation} />
             </VStack>
           </ScrollView>

@@ -15,6 +15,7 @@ import Disease from '../screens/Disease'
 import Diseases from '../screens/Diseases'
 import Settings from '../screens/Settings'
 import SettingsButton from './SettingsButton'
+import Book from '../screens/Book'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -125,6 +126,7 @@ export function AppStack() {
       />
       <Stack.Screen name="Disease" component={Disease} />
       <Stack.Screen name="Diseases" component={Diseases} />
+      <Stack.Screen name="Book" component={Book} />
     </Stack.Navigator>
   )
 }
