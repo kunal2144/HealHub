@@ -47,7 +47,7 @@ const Login = (props) => {
         }
       }
 
-      const { data } = await axios.post(
+      const response = await axios.post(
         `${BASE_URL}api/patient/login/`,
         {
           email,
@@ -57,6 +57,7 @@ const Login = (props) => {
       )
 
       try {
+        const { data } = response
         await SecureStore.setItemAsync('JWT_TOKEN', data.token)
         await SecureStore.setItemAsync('USER_DATA', JSON.stringify(data))
         setUserToken(data.token)
@@ -67,7 +68,7 @@ const Login = (props) => {
 
       toast.closeAll()
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response.status == 401) {
         showToast(
           {
             placement: 'bottom',

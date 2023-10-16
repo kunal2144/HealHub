@@ -33,31 +33,35 @@ const Book = ({ navigation, route }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const members = await axios.post(
-        `${BASE_URL}api/patient/get-members`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userData.token}`
+      try {
+        const members = await axios.post(
+          `${BASE_URL}api/patient/get-members`,
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${userData.token}`
+            }
           }
-        }
-      )
+        )
 
-      let updatedMembers = members.data.reduce((res, member) => {
-        res[member._id] = {
-          firstName: member.first_name,
-          lastName: member.last_name
-        }
-        return res
-      }, {})
+        let updatedMembers = members.data.reduce((res, member) => {
+          res[member._id] = {
+            firstName: member.first_name,
+            lastName: member.last_name
+          }
+          return res
+        }, {})
 
-      updatedMembers['self'] = {
-        firstName: userData.firstName,
-        lastName: userData.lastName
+        updatedMembers['self'] = {
+          firstName: userData.firstName,
+          lastName: userData.lastName
+        }
+
+        setMemberData(updatedMembers)
+      } catch (error) {
+        console.log(error)
       }
-
-      setMemberData(updatedMembers)
     }
     if (userData.familyMembers) fetchData()
   }, [userData.familyMembers])

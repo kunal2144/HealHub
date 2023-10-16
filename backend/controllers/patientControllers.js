@@ -10,8 +10,8 @@ const registerPatient = asyncHandler(async (req, res) => {
   const patientExists = await Patient.findOne({ email })
 
   if (patientExists) {
-    res.status(400)
-    throw new Error('Patient already exists')
+    console.log('here')
+    return res.status(400).json({ error: 'Patient already exists' })
   }
 
   const patient = await Patient.create({
@@ -30,8 +30,7 @@ const registerPatient = asyncHandler(async (req, res) => {
       token: generateToken(patient._id)
     })
   } else {
-    res.status(500)
-    throw new Error('Failed to create patient')
+    res.status(500).json({ error: 'Failed to create patient' })
   }
 })
 
@@ -41,7 +40,7 @@ const authPatient = asyncHandler(async (req, res) => {
   const patient = await Patient.findOne({ email })
 
   if (patient && (await patient.matchPassword(password))) {
-    res.json({
+    res.status(200).json({
       token: generateToken(patient._id),
       firstName: patient.first_name,
       lastName: patient.last_name,
@@ -54,8 +53,7 @@ const authPatient = asyncHandler(async (req, res) => {
       familyMembers: patient.family_members
     })
   } else {
-    res.status(401)
-    throw new Error('Invalid email or password')
+    res.status(401).json({ error: 'Invalid email or password' })
   }
 })
 
