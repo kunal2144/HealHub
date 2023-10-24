@@ -9,7 +9,7 @@ import {
 } from '@expo-google-fonts/poppins'
 import { RobotoMono_400Regular } from '@expo-google-fonts/roboto-mono'
 import { LogBox } from 'react-native'
-import { AuthStack, AppStack } from './src/components/Navigator'
+import { AuthStack, AppStack } from './src/screens/Navigator'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
 import * as SecureStore from 'expo-secure-store'

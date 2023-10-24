@@ -55,8 +55,8 @@ const CommonCategories = ({ navigation }) => {
           <VStack gap={2} alignItems="center" key={index}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('Book', {
-                  category: category.name,
+                navigation.navigate('Doctors', {
+                  type: category.name,
                   image: category.image
                 })
               }
@@ -83,7 +83,7 @@ const CommonCategories = ({ navigation }) => {
         width={'100%'}
         paddingHorizontal={5}
         height={35}
-        onPress={() => navigation.navigate('Consultations')}
+        onPress={() => navigation.navigate('Specialists')}
         marginTop={-2}
       >
         <Text fontSize={16} fontFamily="Poppins_600SemiBold" color="black">

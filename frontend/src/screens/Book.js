@@ -104,11 +104,11 @@ const Book = ({ navigation, route }) => {
 
   const getIST = (date) => {
     let time = date
-      .toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
+      .toLocaleString(undefined, { timeZone: 'Asia/Calcutta' })
       .split(', ')[1]
       .split(':')
 
-    return `${time[0]}:${time[1]} ${time[2].split(' ')[1]}`
+    return `${time[0]}:${time[1]} ${time[2].slice(-2)}`
   }
 
   return (

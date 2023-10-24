@@ -1,21 +1,23 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Login from '../screens/Login'
-import Home from '../screens/Home'
-import SignUp from '../screens/SignUp'
+import Login from './Login'
+import Home from './Home'
+import SignUp from './SignUp'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import HomeButton from './HomeButton'
-import PrescriptionsButton from './PrescriptionsButton'
-import ConsultationsButton from './ConsultationsButton'
-import ProfileButton from './ProfileButton'
-import Prescriptions from '../screens/Prescriptions'
-import Consultations from '../screens/Consultations'
-import Profile from '../screens/Profile'
-import Disease from '../screens/Disease'
-import Diseases from '../screens/Diseases'
-import Settings from '../screens/Settings'
-import SettingsButton from './SettingsButton'
-import Book from '../screens/Book'
+import HomeButton from '../components/HomeButton'
+import PrescriptionsButton from '../components/PrescriptionsButton'
+import ConsultationsButton from '../components/ConsultationsButton'
+import ProfileButton from '../components/ProfileButton'
+import Prescriptions from './Prescriptions'
+import Consultations from './Consultations'
+import Profile from './Profile'
+import Disease from './Disease'
+import Diseases from './Diseases'
+import Specialists from './Specialists'
+import Settings from './Settings'
+import SettingsButton from '../components/SettingsButton'
+import Book from './Book'
+import Doctors from './Doctors'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -127,6 +129,8 @@ export function AppStack() {
       <Stack.Screen name="Disease" component={Disease} />
       <Stack.Screen name="Diseases" component={Diseases} />
       <Stack.Screen name="Book" component={Book} />
+      <Stack.Screen name="Specialists" component={Specialists} />
+      <Stack.Screen name="Doctors" component={Doctors} />
     </Stack.Navigator>
   )
 }
