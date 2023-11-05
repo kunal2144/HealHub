@@ -6,6 +6,15 @@ import React, { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import PropTypes from 'prop-types'
 
+const getIST = (date) => {
+  let time = date
+    .toLocaleString(undefined, { timeZone: 'Asia/Calcutta' })
+    .split(', ')[1]
+    .split(':')
+
+  return `${time[0]}:${time[1]} ${time[2].slice(-2)}`
+}
+
 const UpcomingConsultations = ({ navigation, basic }) => {
   const { consultations } = useContext(AuthContext)
   if (consultations['upcoming'].length === 0) {
@@ -33,12 +42,11 @@ const UpcomingConsultations = ({ navigation, basic }) => {
     <Box
       borderRadius={20}
       backgroundColor="#158AAD"
-      padding={18}
       borderColor="black"
       borderWidth={1}
       style={global.shadow}
     >
-      <VStack gap={10}>
+      <VStack gap={10} padding={18}>
         <HStack gap={10} alignItems="center">
           <Box borderRadius={100} borderWidth={2} borderColor="black">
             <Image
@@ -49,12 +57,20 @@ const UpcomingConsultations = ({ navigation, basic }) => {
               borderRadius={100}
             />
           </Box>
-          <VStack gap={2}>
+          <VStack gap={2} justifyContent="flex-end">
             <Text fontFamily="Poppins_600SemiBold" color="white" size="lg">
-              Dr. Ajin Giny K.
+              {consultations['upcoming'][0].doctor_id.name}
             </Text>
             <Text color="white" size="md">
-              10:00 AM{'\n'}General Consultation
+              {getIST(new Date(consultations['upcoming'][0].start_datetime))}
+              {', '}
+              {new Date(consultations['upcoming'][0].start_datetime)
+                .toDateString()
+                .split(' ')
+                .slice(1, 4)
+                .join(' ')}
+              {'\n'}
+              {consultations['upcoming'][0].category}
             </Text>
           </VStack>
         </HStack>
@@ -69,30 +85,16 @@ const UpcomingConsultations = ({ navigation, basic }) => {
           bottom={0}
         >
           <Text fontSize={16} fontFamily="Poppins_600SemiBold" color="black">
-            More Info
+            Message
           </Text>
         </Button>
-        <HStack alignItems="center" justifyContent="space-between">
+        <HStack alignItems="center" gap={10} justifyContent="space-between">
           <Button
             borderRadius={15}
             borderColor="black"
             borderWidth={1}
+            flexGrow={1}
             backgroundColor="#D0F4FF"
-            width={'30%'}
-            paddingHorizontal={5}
-            height={35}
-            bottom={0}
-          >
-            <Text fontSize={16} fontFamily="Poppins_600SemiBold" color="black">
-              Message
-            </Text>
-          </Button>
-          <Button
-            borderRadius={15}
-            borderColor="black"
-            borderWidth={1}
-            backgroundColor="#D0F4FF"
-            width={'35%'}
             paddingHorizontal={5}
             height={35}
             bottom={0}
@@ -105,8 +107,8 @@ const UpcomingConsultations = ({ navigation, basic }) => {
             borderRadius={15}
             borderColor="black"
             borderWidth={1}
+            flexGrow={1}
             backgroundColor="#D0F4FF"
-            width={'30%'}
             paddingHorizontal={5}
             height={35}
             bottom={0}
@@ -169,8 +171,8 @@ const NoUpcomingConsultations = ({ navigation }) => {
               size="sm"
               flexShrink={1}
             >
-              Someone&apos;s been keeping well! If you ever feel the need for a
-              check, we&apos;re right here!
+              Someone&apos;s been keeping well!{'\n'}If you ever feel the need
+              for a check, we&apos;re right here!
             </Text>
           </VStack>
         </HStack>

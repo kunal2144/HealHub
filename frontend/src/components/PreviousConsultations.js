@@ -27,7 +27,7 @@ const PreviousConsultations = ({ navigation }) => {
         >
           Previous Consultations
         </Text>
-        {consultations['past'].map((consultation, index) => (
+        {consultations['past'].slice(0, 2).map((consultation, index) => (
           <Box
             borderRadius={20}
             backgroundColor="#D0F4FF"
@@ -47,10 +47,16 @@ const PreviousConsultations = ({ navigation }) => {
               <Box height={'100%'} width={1} backgroundColor="black"></Box>
               <VStack>
                 <Text fontFamily="Poppins_700Bold" color="black">
-                  Dr. Ajin Giny K.
+                  {consultation.doctor_id.name}
                 </Text>
-                <Text color="black">Orthopaedic</Text>
-                <Text color="black">12/06/2023</Text>
+                <Text color="black">{consultation.category}</Text>
+                <Text color="black">
+                  {new Date(consultation.start_datetime)
+                    .toDateString()
+                    .split(' ')
+                    .slice(1, 4)
+                    .join(' ')}
+                </Text>
               </VStack>
               <Box height={'100%'} width={1} backgroundColor="black"></Box>
               <Button

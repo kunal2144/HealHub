@@ -7,14 +7,18 @@ const getConsultations = asyncHandler(async (req, res) => {
 
   try {
     const upcoming = await Consultation.find({
-      patient_id: patient._id,
+      patient_id: { $in: [patient._id, ...patient.family_members] },
       start_datetime: { $gte: Date.now() }
-    }).populate('patient_id')
+    })
+      .populate([{ path: 'patient_id', select: { password: 0 } }, 'doctor_id'])
+      .sort({ start_datetime: 1 })
 
     const past = await Consultation.find({
-      patient_id: patient._id,
+      patient_id: { $in: [patient._id, ...patient.family_members] },
       start_datetime: { $lt: Date.now() }
     })
+      .populate([{ path: 'patient_id', select: { password: 0 } }, 'doctor_id'])
+      .sort({ start_datetime: 1 })
 
     const consultations = {
       upcoming,
@@ -30,7 +34,7 @@ const getConsultations = asyncHandler(async (req, res) => {
 
 const bookConstulation = asyncHandler(async (req, res) => {
   const { patient } = req
-  const { start_datetime, user, category } = req.body
+  const { start_datetime, user, category, doctor_id } = req.body
 
   let consultation = null
 
@@ -40,6 +44,7 @@ const bookConstulation = asyncHandler(async (req, res) => {
         patient_id: new mongoose.Types.ObjectId(patient._id),
         start_datetime,
         category,
+        doctor_id,
         model: 'Patient'
       })
     } else {
@@ -47,9 +52,15 @@ const bookConstulation = asyncHandler(async (req, res) => {
         patient_id: new mongoose.Types.ObjectId(user),
         start_datetime,
         category,
+        doctor_id,
         model: 'FamilyMember'
       })
     }
+
+    consultation = await Consultation.findById(consultation._id).populate([
+      { path: 'patient_id', select: { password: 0 } },
+      'doctor_id'
+    ])
 
     res.json(consultation)
   } catch (error) {

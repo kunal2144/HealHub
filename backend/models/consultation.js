@@ -12,7 +12,12 @@ const consultationSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    // doctor_id: { type: String, required: true, trim: true },
+    doctor_id: {
+      type: mongoose.Schema.ObjectId,
+      required: true,
+      trim: true,
+      ref: 'Doctor'
+    },
     start_datetime: { type: Date, required: true, trim: true },
     end_datetime: { type: Date, trim: true },
     // chat_id: { type: String, required: true, trim: true },

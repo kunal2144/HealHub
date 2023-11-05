@@ -10,7 +10,6 @@ const registerPatient = asyncHandler(async (req, res) => {
   const patientExists = await Patient.findOne({ email })
 
   if (patientExists) {
-    console.log('here')
     return res.status(400).json({ error: 'Patient already exists' })
   }
 
@@ -170,22 +169,6 @@ const deleteMember = asyncHandler(async (req, res) => {
       res.status(404)
       throw new Error('Member not found')
     }
-
-    console.log(
-      await Patient.findOneAndUpdate(
-        {
-          _id: patient._id
-        },
-        {
-          $pull: {
-            family_members: idToRemove
-          }
-        },
-        {
-          new: true
-        }
-      )
-    )
 
     res.status(200).json({ message: 'Member deleted' })
   } catch (error) {

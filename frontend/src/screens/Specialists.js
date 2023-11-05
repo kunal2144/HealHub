@@ -90,8 +90,7 @@ const Specialists = ({ navigation }) => {
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate('Doctors', {
-                        type: category.name,
-                        image: category.image
+                        type: category.name
                       })
                     }
                   >
