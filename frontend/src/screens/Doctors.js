@@ -107,7 +107,7 @@ const Doctors = ({ route, navigation }) => {
                             <Text>
                               {new Date().getFullYear() -
                                 doctor.year +
-                                ' years'}
+                                ' years exp'}
                             </Text>
                           </HStack>
                         </Box>
