@@ -37,13 +37,15 @@ const PreviousConsultations = ({ navigation }) => {
             key={index}
           >
             <HStack justifyContent="space-between" alignItems="center">
-              <Image
-                source={DoctorImage}
-                size="sm"
-                borderColor="white"
-                borderWidth={2}
-                borderRadius={100}
-              />
+              <Box>
+                <Image
+                  source={DoctorImage}
+                  size="sm"
+                  borderColor="white"
+                  borderWidth={2}
+                  borderRadius={100}
+                />
+              </Box>
               <Box height={'100%'} width={1} backgroundColor="black"></Box>
               <VStack>
                 <Text fontFamily="Poppins_700Bold" color="black">
