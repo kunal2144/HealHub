@@ -1,20 +1,4 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Image,
-  // Select,
-  // SelectBackdrop,
-  // SelectContent,
-  // SelectDragIndicator,
-  // SelectDragIndicatorWrapper,
-  // SelectInput,
-  // SelectItem,
-  // SelectPortal,
-  // SelectTrigger,
-  Text,
-  VStack
-} from '@gluestack-ui/react'
+import { Box, Button, HStack, Image, Text, VStack } from '@gluestack-ui/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { Dropdown } from 'react-native-element-dropdown'
 import { ScrollView, StyleSheet, View } from 'react-native'
@@ -29,7 +13,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 const Book = ({ navigation, route }) => {
   const { doctor, category, image } = route.params
-  const { userData, setConsultations } = useContext(AuthContext)
+  const { userData, setConsultations, userToken } = useContext(AuthContext)
   const [data, setData] = useState([])
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
@@ -37,6 +21,7 @@ const Book = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date())
   const [time, setTime] = useState(new Date())
   const [isFocus, setIsFocus] = useState(false)
+  const [canBook, setCanBook] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +57,35 @@ const Book = ({ navigation, route }) => {
     if (userData.familyMembers) fetchData()
   }, [userData.familyMembers])
 
+  async function getConsultations() {
+    setCanBook(false)
+    try {
+      const consultationsConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`
+        }
+      }
+
+      const response = await axios.post(
+        `${BASE_URL}api/consultation/get-consultations`,
+        {},
+        consultationsConfig
+      )
+
+      setConsultations(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+    setCanBook(true)
+  }
+
   const bookConsultation = async () => {
+    if (date < new Date()) {
+      alert('Please choose a valid date and time')
+      return
+    }
+
     try {
       const config = {
         headers: {
@@ -80,8 +93,7 @@ const Book = ({ navigation, route }) => {
           Authorization: `Bearer ${userData.token}`
         }
       }
-
-      const response = await axios.post(
+      await axios.post(
         `${BASE_URL}api/consultation/book-consultation`,
         {
           category: category,
@@ -91,21 +103,9 @@ const Book = ({ navigation, route }) => {
         },
         config
       )
-      setConsultations((prev) => {
-        let upcoming = [...prev.upcoming]
-        let index = 0
-        for (let i = 0; i < upcoming.length; i++) {
-          if (upcoming[i].start_datetime > response.data.start_datetime) {
-            index = i
-            break
-          }
-        }
-        upcoming.splice(index, 0, response.data)
-        return {
-          ...prev,
-          upcoming: upcoming
-        }
-      })
+      await getConsultations()
+      alert('Consultation booked successfully')
+      navigation.navigate('Consultations')
     } catch (error) {
       console.log(error)
     }
@@ -269,6 +269,8 @@ const Book = ({ navigation, route }) => {
                   <DateTimePickerModal
                     isVisible={isDatePickerVisible}
                     mode="date"
+                    minimumDate={new Date()}
+                    maximumDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
                     onConfirm={(date) => {
                       setDate(date)
                       setDatePickerVisibility(false)
@@ -280,6 +282,8 @@ const Book = ({ navigation, route }) => {
                   <DateTimePickerModal
                     isVisible={isTimePickerVisible}
                     mode="time"
+                    minimumDate={new Date()}
+                    maximumDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
                     onConfirm={(time) => {
                       setTime(time)
                       setTimePickerVisibility(false)
@@ -296,10 +300,8 @@ const Book = ({ navigation, route }) => {
                     paddingHorizontal={5}
                     height={35}
                     bottom={0}
-                    onPress={() => {
-                      bookConsultation()
-                      navigation.navigate('Consultations')
-                    }}
+                    disabled={!canBook}
+                    onPress={bookConsultation}
                   >
                     <Text
                       fontSize={16}
